@@ -34,12 +34,7 @@
 			"csp": null
 		},
 		"updater": {
-			"active": true,
-			"endpoints": [
-				"https://raw.githubusercontent.com/bingryan/WeChatAI/main/updater.json"
-			],
-			"dialog": true,
-			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENFNkRFODAwRDlDM0M2RjIKUldUeXhzUFpBT2h0enZyNUI1UFdJZmpOVVZyY3hmOEdpWE94Y1R0ZVNHRXRHMDZ5RWdIN0htSW8K"
+			"active": false
 		},
 		"windows": [
 			{
