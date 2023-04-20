@@ -1,0 +1,33 @@
+{
+	"theme": "light",
+	"language": "zh-CN",
+	"sidebar": true,
+	"avtivitybar": true,
+	"userAvatarUrl": "",
+	"assistantAvatarUrl": "",
+	"avatarUrl": "",
+	"globalSettings": false,
+	"chatModelVisible": false,
+	"newChatModal": false,
+	"content": {
+		"userLightBackgroundColor": "#a9ea7a",
+		"userDarkBackgroundColor": "#59b269",
+		"assistantLightBackgroundColor": "#f2f3f5",
+		"assistantDarkBackgroundColor": "#11111",
+		"userContentType": "raw",
+		"assistantContentType": "markdown"
+	},
+	"chatgptInfo": {
+		"openai_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		"temperature": "0.5",
+		"top_p": "1.0",
+		"presence_penalty": "0.0",
+		"frequency_penalty": "0.0",
+		"reply_count": "1",
+		"engine": "gpt-3.5-turbo",
+		"api_url": "https://api.openai.com/v1/chat/completions",
+		"context_size": "2",
+		"system_message": "You are ChatGPT, an AI model developed by OpenAI. Answer as concisely as possible. "
+	},
+	"device": "desktop"
+}

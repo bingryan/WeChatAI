@@ -1,0 +1,43 @@
+{
+	"current": 1681840823689,
+	"chatSetting": [
+		{
+			"id": 1681840823689,
+			"model": "chatgpt",
+			"title": "玩家须知",
+			"uptime": 1681840823689,
+			"setting": {
+				"openai_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+				"temperature": "0.5",
+				"top_p": "1.0",
+				"presence_penalty": "0.0",
+				"frequency_penalty": "0.0",
+				"reply_count": "1",
+				"engine": "gpt-3.5-turbo",
+				"api_url": "https://api.openai.com/v1/chat/completions",
+				"context_size": "2",
+				"system_message": "You are ChatGPT, an AI model developed by OpenAI. Answer as concisely as possible. "
+			}
+		}
+	],
+	"chatCache": [
+		{
+			"id": 1681840823689,
+			"uptime": 1681909121833,
+			"data": [
+				{
+					"role": "user",
+					"error": false,
+					"time": "1681909089891",
+					"content": "开发者想对第一次进入wechat用户说什么?"
+				},
+				{
+					"role": "assistant",
+					"error": false,
+					"time": "1681909091921",
+					"content": " - [x] 默认此聊天没有输入Open AI Key, 所以你必须点击头像,输入你的OpenAI Key, 才能开始聊天. \n\n - [x] 左侧设置为全局设置,当配置了全局的Chatgpt信息, 新建聊天会把全局配置作为默认配置, 但是<mark>之前建立聊天页还是之前的配置信息<mark> \n\n - [x] 任何聊天不爽或者有新的建议请访问[https://github.com/bingryan/WeChatAI/issues](https://github.com/bingryan/WeChatAI/issues)提issue, 同时欢迎开发者一起贡献\n\n - [x] 本项目作为交流学习, 不为打赏与获利, 仅供参考与学习,只用于个人用户, 请勿用于割韭菜🫡"
+				}
+			]
+		}
+	]
+}

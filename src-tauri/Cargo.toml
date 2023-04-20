@@ -1,0 +1,64 @@
+[package]
+name = "WeChatAI"
+version = "0.1.0"
+description = "a tool that causes you to chat with AI"
+authors = ["bingryan"]
+license = "MIT"
+repository = "https://github.com/bingryan/WeChatAI"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.2", features = [] }
+
+
+[dependencies]
+tauri = { version = "1.2", features = ["api-all", "custom-protocol", "devtools", "macos-private-api", "reqwest-client", "system-tray", "updater"] }
+window-vibrancy = { version = "0.3" }
+auto-launch = "0.4.0"
+dunce = "1.0.3"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+config = "0.13.3"
+
+anyhow = { version = "1.0" }
+thiserror = { version = "1.0" }
+
+once_cell = { version = "1.16" }
+parking_lot = { version = "0.12" }
+
+
+dirs = { version = "5.0.0" }
+
+axum = { version = "0.6.12", features = ["headers","multipart"] }
+dotenv = "0.15.0"
+futures = "0.3.28"
+futures-util = "0.3.28"
+chatgpt_rs = { path = "../crates/chatgpt_rs", default-features = false, features = ["streams", "json"] }
+http-body = "0.4.5"
+bytes = "1"
+tokio = "1.27.0"
+tokio-util = "0.7.7"
+async-stream = "0.3.5"
+validator   = { version = "0.16", features = ["derive"] }
+async-trait = "0.1.68"
+tracing  = { version = "0.1.37" }
+log = "0.4.14"
+url = "2.3.1"
+tower = { version = "0.4", features = ["util"] }
+tower-http = { version = "0.4.0", features = ["fs", "trace","cors"] }
+http = "0.2.9"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"

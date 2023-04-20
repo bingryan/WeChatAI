@@ -1,0 +1,58 @@
+{
+	"build": {
+		"beforeDevCommand": "pnpm dev",
+		"beforeBuildCommand": "pnpm build",
+		"devPath": "http://localhost:1420",
+		"distDir": "../dist",
+		"withGlobalTauri": false
+	},
+	"package": {
+		"productName": "WeChatAI",
+		"version": "1.0.0"
+	},
+	"tauri": {
+		"macOSPrivateApi": true,
+		"allowlist": {
+			"all": true
+		},
+		"bundle": {
+			"active": true,
+			"category": "DeveloperTool",
+			"copyright": "© 2023 bingryan All Rights Reserved",
+			"icon": [
+				"icons/32x32.png",
+				"icons/128x128.png",
+				"icons/128x128@2x.png",
+				"icons/icon.icns",
+				"icons/icon.ico"
+			],
+			"identifier": "com.bingryan.WeChatAI",
+			"longDescription": "Chat AI Model Application",
+			"targets": "all"
+		},
+		"security": {
+			"csp": null
+		},
+		"updater": {
+			"active": true,
+			"endpoints": [
+				"https://raw.githubusercontent.com/bingryan/WeChatAI/main/updater.json"
+			],
+			"dialog": true,
+			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE4NDRBNTBCRDAzMzA4NEIKUldSTENEUFFDNlZFR0tKZm0wdkdHSTg3dkV0aWhmSXNJM0dsdEl2dEpMNjlyWmovcFlyU2xCd3kK"
+		},
+		"windows": [
+			{
+				"fullscreen": false,
+				"resizable": true,
+				"title": "",
+				"width": 1060,
+				"height": 600
+			}
+		],
+		"systemTray": {
+			"iconPath": "icons/icon.png",
+			"iconAsTemplate": true
+		}
+	}
+}
