@@ -16,6 +16,28 @@
 
 ## For User
 
+### Install
+
+请访问[Windows, Mac(M1, intel), Linux](https://github.com/bingryan/WeChatAI/releases)下载对应的版本
+
+#### Mac 用户
+
+出现以下问题的解决方案:
+
+![](./docs/image/WeChatAI-2.png)
+
+第一步: 打开`系统偏好设置` -> `安全性与隐私` -> `通用` -> `允许任何来源`
+实在不行执行下面代码:
+
+```
+sudo spctl --master-disable
+```
+
+第二步: `xattr -cr /Applications/xxx.app`
+
+终端先输入: `xattr -cr` , 然后把应用拖拽到终端
+
+
 ### Features and Setting
 
 左侧设置拦作为全局的设置, 包含了`语言`,`自定义头像`,`主题设置`, `用户聊天背景`,`助手聊天背景`, `用户markdown和raw`, `助手markdown和raw`,`全局Chatgpt配置`,

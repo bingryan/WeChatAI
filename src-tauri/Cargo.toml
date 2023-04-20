@@ -1,6 +1,6 @@
 [package]
 name = "WeChatAI"
-version = "0.1.0"
+version = "1.0.0"
 description = "a tool that causes you to chat with AI"
 authors = ["bingryan"]
 license = "MIT"
@@ -14,7 +14,7 @@ tauri-build = { version = "1.2", features = [] }
 
 
 [dependencies]
-tauri = { version = "1.2", features = ["api-all", "custom-protocol", "devtools", "macos-private-api", "reqwest-client", "system-tray", "updater"] }
+tauri = { version = "1.2", features = ["api-all", "custom-protocol", "devtools", "macos-private-api", "reqwest-client", "system-tray"] }
 window-vibrancy = { version = "0.3" }
 auto-launch = "0.4.0"
 dunce = "1.0.3"
