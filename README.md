@@ -8,6 +8,10 @@
 </div>
 <br/>
 
+
+[![](https://img.shields.io/badge/%E4%B8%AD%E6%96%87-Chinese-success)](./README.md)
+[![](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-success)](./README-EN.md)
+
 > 本项目不为打赏与获利, 仅供参考与学习,只用于个人用户, 请勿用于割韭菜, 谢谢配合
 
 ## Screenshot
@@ -24,7 +28,7 @@
 
 出现以下问题的解决方案:
 
-![](./docs/image/WeChatAI-2.png)
+<img src="docs/image/WeChatAI-2.png?raw=true" alt="image" height="200px"/>
 
 第一步: 打开`系统偏好设置` -> `安全性与隐私` -> `通用` -> `允许任何来源`
 实在不行执行下面代码:
