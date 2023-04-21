@@ -26,12 +26,12 @@
 						placeholder="New CHat" />
 				</FormItem>
 				<FormItem
-					field="openaiKey"
-					label="OpenAIKey:"
+					field="apiKey"
+					label="apiKey:"
 					:validate-trigger="['change', 'input']">
 					<InputPassword
-						v-model="chatInfo.setting.openai_key"
-						placeholder="your Open AI Key..." />
+						v-model="chatInfo.setting.api_key"
+						placeholder="your Azure/Open AI Key..." />
 				</FormItem>
 				<FormItem field="temperature" label="temperature" feedback>
 					<Input v-model="chatInfo.setting.temperature" default-value="0.5" />
