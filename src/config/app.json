@@ -18,7 +18,7 @@
 		"assistantContentType": "markdown"
 	},
 	"chatgptInfo": {
-		"openai_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		"api_key": "",
 		"temperature": "0.5",
 		"top_p": "1.0",
 		"presence_penalty": "0.0",

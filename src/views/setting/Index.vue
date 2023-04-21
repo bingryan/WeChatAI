@@ -124,12 +124,12 @@
 			<Collapse>
 				<CollapseItem :header="$t('settings.chatgptConfig')">
 					<FormItem
-						field="openaiKey"
-						label="OpenAIKey:"
+						field="apiKey"
+						label="apiKey:"
 						:validate-trigger="['change', 'input']">
 						<InputPassword
-							v-model="settingform.chatgptInfo.openai_key"
-							placeholder="your Open AI Key..." />
+							v-model="settingform.chatgptInfo.api_key"
+							placeholder="your Azure/Open AI Key..." />
 					</FormItem>
 					<FormItem field="temperature" label="temperature" feedback>
 						<Input

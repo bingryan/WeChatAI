@@ -9,7 +9,7 @@ declare namespace App {
 	}
 
 	interface chatgptInfo {
-		openai_key: string;
+		api_key: string;
 		temperature: string;
 		top_p: string;
 		presence_penalty: string;
