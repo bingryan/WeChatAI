@@ -18,6 +18,11 @@
 
 ![](docs/image/WeChatAI-1.png)
 
+## Supported Service
+
+- [OpenAI](platform.openai.com)
+- [Azure OpenAI](azure.com)
+
 ## For User
 
 ### Install
