@@ -150,7 +150,6 @@
 				openai_key: openaiKey,
 			} = chatSetting.value.setting;
 			const messages = cacheContextList.value.slice(0, -1);
-			console.log('messages:', messages);
 			const response = await fetch(apiUrl, {
 				method: 'POST',
 				headers: {
