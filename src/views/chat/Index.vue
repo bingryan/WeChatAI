@@ -29,14 +29,26 @@
 	);
 
 	// filter error messages
-	const cacheContextList = computed(
-		() =>
+	const cacheContextList = computed(() => {
+		let chatRecords =
 			cacheData.value
 				?.filter((ele: any) => !ele.error)
 				.slice(-(+contentSize.value + 1))
 				// @ts-ignore
-				.map(({ role, content }) => ({ role, content })) ?? []
-	);
+				.map(({ role, content }) => ({ role, content })) ?? [];
+
+		const systemMessage = chatSetting.value?.setting.system_message;
+		if (systemMessage) {
+			chatRecords = [
+				{
+					role: 'system',
+					content: systemMessage,
+				},
+				...chatRecords,
+			];
+		}
+		return chatRecords;
+	});
 
 	let controller = new AbortController();
 
@@ -137,7 +149,8 @@
 				api_url: apiUrl,
 				openai_key: openaiKey,
 			} = chatSetting.value.setting;
-			const messages = cacheContextList.value;
+			const messages = cacheContextList.value.slice(0, -1);
+			console.log('messages:', messages);
 			const response = await fetch(apiUrl, {
 				method: 'POST',
 				headers: {
