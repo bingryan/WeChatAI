@@ -49,7 +49,7 @@ fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
         window.close_devtools();
     }
     #[cfg(target_os = "macos")]
-    app.set_activation_policy(tauri::ActivationPolicy::Regular);
+    app.set_activation_policy(tauri::ActivationPolicy::Accessory);
 
     AppConfig::init()?;
     core::handle::Handle::global().init(app.app_handle());
