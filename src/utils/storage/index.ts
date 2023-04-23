@@ -15,6 +15,9 @@ function isDefineStorage(tp: string): tp is StorageTypeList {
 }
 
 function createStorage(): StorageClass {
+	if (!isDefineStorage(defineStorageType)) {
+		throw new Error(`not support ${defineStorageType} storage`);
+	}
 	switch (defineStorageType) {
 		case 'window.localStorage':
 			return wls;
