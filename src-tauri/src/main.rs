@@ -24,6 +24,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             cmd::update_global_chatgpt_config,
             cmd::update_chatgpt_config_by_id,
+            cmd::write_to_file,
         ]);
 
     let app = builder
@@ -49,7 +50,7 @@ fn init(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
         window.close_devtools();
     }
     #[cfg(target_os = "macos")]
-    app.set_activation_policy(tauri::ActivationPolicy::Regular);
+    app.set_activation_policy(tauri::ActivationPolicy::Accessory);
 
     AppConfig::init()?;
     core::handle::Handle::global().init(app.app_handle());

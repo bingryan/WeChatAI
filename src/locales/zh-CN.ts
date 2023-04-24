@@ -23,5 +23,6 @@ export default {
 		delete: '删除',
 		newChat: '新建聊天',
 		editChat: '编辑聊天',
+		saveSuccess: '导出成功',
 	},
 };

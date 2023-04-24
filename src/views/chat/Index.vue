@@ -6,6 +6,7 @@
 	import { Spin } from '@arco-design/web-vue';
 	import { useChatStore } from '@/store';
 	import Textarea from '@/components/Textarea/index.vue';
+	import { parseDomain } from '@/utils/misc';
 	import { useCopyCode } from './hooks/useCopyCode';
 	import { useChat } from './hooks/useChat';
 	import { useScroll } from './hooks/useScroll';
@@ -29,14 +30,26 @@
 	);
 
 	// filter error messages
-	const cacheContextList = computed(
-		() =>
+	const cacheContextList = computed(() => {
+		let chatRecords =
 			cacheData.value
 				?.filter((ele: any) => !ele.error)
 				.slice(-(+contentSize.value + 1))
 				// @ts-ignore
-				.map(({ role, content }) => ({ role, content })) ?? []
-	);
+				.map(({ role, content }) => ({ role, content })) ?? [];
+
+		const systemMessage = chatSetting.value?.setting.system_message;
+		if (systemMessage) {
+			chatRecords = [
+				{
+					role: 'system',
+					content: systemMessage,
+				},
+				...chatRecords,
+			];
+		}
+		return chatRecords;
+	});
 
 	let controller = new AbortController();
 
@@ -99,6 +112,20 @@
 		}
 	}
 
+	function handleRequestHeader(apiUrl: string, apiKey: string) {
+		const { domain } = parseDomain(apiUrl);
+		if (domain === 'azure.com') {
+			return {
+				'api-key': apiKey,
+				'Content-Type': 'application/json',
+			};
+		}
+		return {
+			'Authorization': `Bearer ${apiKey}`,
+			'Content-Type': 'application/json',
+		};
+	}
+
 	async function handleConversation() {
 		const message = prompt.value;
 
@@ -135,15 +162,13 @@
 			const {
 				engine,
 				api_url: apiUrl,
-				openai_key: openaiKey,
+				api_key: apiKey,
 			} = chatSetting.value.setting;
-			const messages = cacheContextList.value;
+			const messages = cacheContextList.value.slice(0, -1);
 			const response = await fetch(apiUrl, {
 				method: 'POST',
-				headers: {
-					'Authorization': `Bearer ${openaiKey}`,
-					'Content-Type': 'application/json',
-				},
+				// @ts-ignore
+				headers: handleRequestHeader(apiUrl, apiKey),
 				body: JSON.stringify({
 					messages,
 					model: engine,

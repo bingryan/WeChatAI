@@ -84,15 +84,12 @@ impl Handle {
         let title = window_info.title.as_str();
         let url = window_info.url.as_str();
 
-        // Q: 如果有之前的窗口存在, 那就弹出之前的窗口,请补上逻辑
-        // A:
         if let Some(window) = app_handle.get_window(label) {
+			let _ = window.set_always_on_top(true);
             let _ = window.show();
             return;
         }
 
-        // Q: Tauri如何关闭Mac APP的隐藏
-        // A:
         let new_window = tauri::window::WindowBuilder::new(
             app_handle,
             label.to_string(),
