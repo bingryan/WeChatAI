@@ -24,6 +24,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             cmd::update_global_chatgpt_config,
             cmd::update_chatgpt_config_by_id,
+            cmd::write_to_file,
         ]);
 
     let app = builder
