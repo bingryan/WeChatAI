@@ -5,7 +5,7 @@
 			label="OpenAIKey:"
 			:validate-trigger="['change', 'input']">
 			<InputPassword
-				v-model="settingform.chatgptInfo.openai_key"
+				v-model="settingform.chatgptInfo.api_key"
 				placeholder="your Open AI Key..." />
 		</FormItem>
 		<FormItem field="temperature" label="temperature" feedback>
