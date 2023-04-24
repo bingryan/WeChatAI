@@ -74,6 +74,7 @@ The left setting block serves as a global setting:
 - [ ] integrated model
   - [x] chatgpt
   - [ ] ...
+- [x] export chat log
 - [ ] more...
 
 ## For Developers
