@@ -1,6 +1,9 @@
 <script setup lang="ts">
 	// TODO: add other feat(eg: export data)
-	import { toRefs, watch } from 'vue';
+	import { computed, toRefs, watch } from 'vue';
+	import { useChatStore } from '@/store';
+	import { Notification } from '@arco-design/web-vue';
+	import { invoke } from '@tauri-apps/api/tauri';
 
 	interface Props {
 		modelValue: string;
@@ -37,6 +40,48 @@
 	const handleInput = (e: Event) => {
 		const { value } = e.target as HTMLInputElement;
 		updateValue(value);
+	};
+	// -------------------handle event-----------------------------------------
+	const chatStore = useChatStore();
+
+	const getCurrentCacheData = computed(() => {
+		const currentActiveId = chatStore.current;
+		if (!currentActiveId) {
+			return [];
+		}
+		return chatStore
+			.getCacheById(currentActiveId)
+			.filter((ele: any) => !ele.error);
+	});
+
+	const getCurrentTitle = computed(() => {
+		const currentActiveId = chatStore.current;
+		if (!currentActiveId) {
+			return '';
+		}
+		return chatStore.getChatSettingById(currentActiveId)?.title;
+	});
+
+	async function saveToFile(filename: string, content: string) {
+		try {
+			await invoke('write_to_file', { filename, content }).then(() => {
+				Notification.success({
+					title: 'File saved successfully',
+					content: `$HOME/Downloads/${filename}`,
+				});
+			});
+			console.log('File saved successfully');
+		} catch (error) {
+			console.error('Error saving file:', error);
+		}
+	}
+	const exportChatToJson = () => {
+		const data = getCurrentCacheData.value;
+		const title = getCurrentTitle.value;
+		saveToFile(`${title}.json`, JSON.stringify(data));
+	};
+	const handleSaveToJson = () => {
+		exportChatToJson();
 	};
 </script>
 
@@ -178,7 +223,8 @@
 					</button>
 					<button
 						type="button"
-						class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+						class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+						@click="handleSaveToJson">
 						<svg
 							aria-hidden="true"
 							class="w-5 h-5"

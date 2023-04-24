@@ -19,5 +19,6 @@ export default {
 		delete: 'Delete',
 		newChat: 'New Chat',
 		editChat: 'Edit Chat',
+		saveSuccess: 'save success',
 	},
 };
