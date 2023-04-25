@@ -101,6 +101,14 @@
 				const items = event.clipboardData && event.clipboardData.items;
 				if (items) {
 					for (let i = 0; i < items.length; i += 1) {
+						// text
+						if (items[i].type.indexOf('text/plain') !== -1) {
+							items[i].getAsString((str) => {
+								document.execCommand('insertHTML', false, str);
+							});
+						}
+
+						// image
 						if (items[i].type.indexOf('image') !== -1) {
 							const blob = items[i].getAsFile();
 							const reader = new FileReader();
