@@ -119,6 +119,8 @@
 									if (imageSrc) {
 										const img = document.createElement('img');
 										img.src = imageSrc as string;
+										img.style.width = '160px';
+										img.style.height = '80px';
 										editableContent.appendChild(img);
 									}
 								};
