@@ -5,7 +5,7 @@
 	import { router } from '@/router';
 	import { Spin } from '@arco-design/web-vue';
 	import { useChatStore } from '@/store';
-	import Textarea from '@/components/Textarea/index.vue';
+	import EditableContent from '@/components/EditableContent/index.vue';
 	import { parseDomain } from '@/utils/misc';
 	import { useCopyCode } from './hooks/useCopyCode';
 	import { useChat } from './hooks/useChat';
@@ -272,7 +272,10 @@
 		<footer class="p-4">
 			<div class="w-full max-w-screen-xl overflow-auto">
 				<div class="flex items-center justify-between space-x-2">
-					<Textarea v-model="prompt" @keypress="handleEnter" />
+					<EditableContent
+						v-model="prompt"
+						:style="{ height: '100px' }"
+						@keypress="handleEnter" />
 				</div>
 			</div>
 		</footer>
