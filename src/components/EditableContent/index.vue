@@ -99,12 +99,15 @@
 			editableContent.addEventListener('paste', (event) => {
 				event.preventDefault();
 				const items = event.clipboardData && event.clipboardData.items;
+				console.log('items:', items);
 				if (items) {
 					for (let i = 0; i < items.length; i += 1) {
 						// text
 						if (items[i].type.indexOf('text/plain') !== -1) {
 							items[i].getAsString((str) => {
-								document.execCommand('insertHTML', false, str);
+								// when str is html tag, use insertHTML
+								// when str is plain text, use insertText
+								document.execCommand('insertText', false, str);
 							});
 						}
 
