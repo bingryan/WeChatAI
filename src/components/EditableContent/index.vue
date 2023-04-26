@@ -99,7 +99,6 @@
 			editableContent.addEventListener('paste', (event) => {
 				event.preventDefault();
 				const items = event.clipboardData && event.clipboardData.items;
-				console.log('items:', items);
 				if (items) {
 					for (let i = 0; i < items.length; i += 1) {
 						// text
