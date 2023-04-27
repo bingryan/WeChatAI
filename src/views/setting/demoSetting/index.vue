@@ -1,28 +1,30 @@
 <template>
 	<Form ref="formRef" :model="settingform">
-		<div style="margin-bottom: 8px" class="text-base font-semibold"
-			>General</div
-		>
+		<div class="text-base font-semibold mb-2">General</div>
 		<LabelBox
 			title="Default view for new tabs"
 			desc="The default view that a new markdown tab gets opened in.">
-			<FormItem name="selectStr">
-				<Select v-model="settingform.selectStr" size="mini">
-					<Option value="markdown">markdown</Option>
-					<Option value="raw">raw</Option>
-				</Select>
-			</FormItem>
+			<div class="w-36">
+				<FormItem name="selectStr">
+					<Select v-model="settingform.selectStr">
+						<Option value="markdown">markdown</Option>
+						<Option value="raw">raw</Option>
+					</Select>
+				</FormItem>
+			</div>
 		</LabelBox>
 
 		<LabelBox
 			title="Default editing mode"
 			desc="The default editing mode a new tab will start with.">
-			<FormItem name="selectStr">
-				<Select v-model="settingform.selectStr" size="mini">
-					<Option value="markdown">markdown</Option>
-					<Option value="raw">raw</Option>
-				</Select>
-			</FormItem>
+			<div class="w-36">
+				<FormItem name="selectStr">
+					<Select v-model="settingform.selectStr">
+						<Option value="markdown">markdown</Option>
+						<Option value="raw">raw</Option>
+					</Select>
+				</FormItem>
+			</div>
 		</LabelBox>
 
 		<LabelBox
@@ -33,11 +35,7 @@
 			</FormItem>
 		</LabelBox>
 
-		<div
-			style="margin-top: 24px; margin-bottom: 8px"
-			class="text-base font-semibold"
-			>Display</div
-		>
+		<div class="text-base font-semibold mb-2 mt-6">Display</div>
 		<LabelBox
 			title="Readable line length"
 			desc="Limit maximum line length. Less content fits onscreen, but long blocks of text are more readable.">

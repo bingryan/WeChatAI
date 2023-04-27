@@ -1,113 +1,106 @@
 <template>
-	<Form ref="formRef" :model="settingform" :style="{ width: '560px' }">
-		<div class="ml-14">
-			<Upload
-				ref="uploadRef"
-				action="/"
-				:auto-upload="false"
-				:file-list="file ? [file] : []"
-				:show-file-list="false"
-				@change="onFileChange">
-				<template #upload-button>
-					<div
-						:class="`arco-upload-list-item${
-							file && file.status === 'error'
-								? ' arco-upload-list-item-error'
-								: ''
-						}`">
-						<div
-							v-if="file && file.url"
-							class="arco-upload-list-picture custom-upload-avatar">
-							<img :src="file.url" />
-							<div class="arco-upload-list-picture-mask">
-								<IconEdit />
-							</div>
-							<Progress
-								v-if="file.status === 'uploading'"
-								:percent="file.percent"
-								type="circle"
-								size="mini"
-								:style="{
-									position: 'absolute',
-									left: '50%',
-									top: '50%',
-									transform: 'translateX(-50%) translateY(-50%)',
-								}" />
-						</div>
-						<div v-else class="arco-upload-picture-card">
-							<div class="arco-upload-picture-card-text">
-								<img :src="userImageUrl" class="w-20 h-20 object-cover" />
-							</div>
-						</div>
-					</div>
+	<Form ref="formRef" :model="settingform">
+		<div class="w-full p-6 mb-3 rounded-lg avatar-box flex items-center">
+			<Avatar
+				:size="80"
+				shape="square"
+				:image-url="file && file.url ? file.url : userImageUrl"
+				trigger-type="mask"
+				@click="uploadFile">
+				<template #trigger-icon>
+					<Upload
+						ref="uploadRef"
+						action="/"
+						:auto-upload="false"
+						:show-file-list="false"
+						@change="onFileChange">
+						<template #upload-button> </template>
+					</Upload>
 				</template>
-			</Upload>
+			</Avatar>
+			<div>
+				<div class="ml-4 text-base font-medium"> Modify user settings</div>
+				<div class="ml-4 text-sm font-normal opacity-60"
+					>Upload a picture to modify the avatar</div
+				>
+			</div>
 		</div>
-		<FormItem label="Theme:">
-			<RadioGroup v-model="settingform.theme" @change="changeTheme">
-				<Radio value="light">
-					<IconSunFill size="26" />
-				</Radio>
-				<Radio value="dark">
-					<IconMoonFill size="26" />
-				</Radio>
-				<Radio value="auto">
-					<IconComputer size="26" />
-				</Radio>
-			</RadioGroup>
-		</FormItem>
-		<FormItem
-			field="userBackgroundColor"
-			:label="$t('settings.userBackgroundColor')">
-			<IconSunFill size="26" />
-			<input
-				v-model="settingform.content.userLightBackgroundColor"
-				type="color"
-				class="mr-12" />
-			<IconMoonFill size="26" />
-			<input
-				v-model="settingform.content.userDarkBackgroundColor"
-				type="color" />
-		</FormItem>
-		<FormItem
-			field="userBackgroundColor"
-			:label="$t('settings.assistantBackgroundColor')">
-			<IconSunFill size="26" />
-			<input
-				v-model="settingform.content.assistantLightBackgroundColor"
-				type="color"
-				class="mr-12" />
-			<IconMoonFill size="26" />
-			<input
-				v-model="settingform.content.assistantDarkBackgroundColor"
-				type="color" />
-		</FormItem>
-		<FormItem
-			field="userContentType"
-			:label="$t('settings.userContentType')"
-			feedback>
-			<Select v-model="settingform.content.userContentType" default-value="raw">
-				<Option value="markdown">markdown</Option>
-				<Option value="raw">raw</Option>
-			</Select>
-		</FormItem>
-		<FormItem
-			field="assistantContentType"
-			:label="$t('settings.assistantContentType')"
-			feedback>
-			<Select
-				v-model="settingform.content.assistantContentType"
-				default-value="markdown">
-				<Option value="markdown">markdown</Option>
-				<Option value="raw">raw</Option>
-			</Select>
-		</FormItem>
-		<FormItem field="locale" :label="$t('settings.language')">
-			<Select v-model="settingform.language" @change="changeLanguage">
-				<Option value="en-US">English</Option>
-				<Option value="zh-CN">简体中文</Option>
-			</Select>
-		</FormItem>
+
+		<LabelBox title="Theme">
+			<FormItem>
+				<RadioGroup v-model="settingform.theme" @change="changeTheme">
+					<Radio value="light">
+						<IconSunFill size="26" />
+					</Radio>
+					<Radio value="dark">
+						<IconMoonFill size="26" />
+					</Radio>
+					<Radio value="auto">
+						<IconComputer size="26" />
+					</Radio>
+				</RadioGroup>
+			</FormItem>
+		</LabelBox>
+		<LabelBox :title="$t('settings.userBackgroundColor')">
+			<FormItem field="userBackgroundColor">
+				<IconSunFill size="26" />
+				<input
+					v-model="settingform.content.userLightBackgroundColor"
+					type="color"
+					class="mr-12" />
+				<IconMoonFill size="26" />
+				<input
+					v-model="settingform.content.userDarkBackgroundColor"
+					type="color" />
+			</FormItem>
+		</LabelBox>
+		<LabelBox :title="$t('settings.assistantBackgroundColor')">
+			<FormItem field="userBackgroundColor">
+				<IconSunFill size="26" />
+				<input
+					v-model="settingform.content.assistantLightBackgroundColor"
+					type="color"
+					class="mr-12" />
+				<IconMoonFill size="26" />
+				<input
+					v-model="settingform.content.assistantDarkBackgroundColor"
+					type="color" />
+			</FormItem>
+		</LabelBox>
+		<LabelBox :title="$t('settings.userContentType')">
+			<div class="w-36">
+				<FormItem field="userContentType" feedback>
+					<Select
+						v-model="settingform.content.userContentType"
+						default-value="raw">
+						<Option value="markdown">markdown</Option>
+						<Option value="raw">raw</Option>
+					</Select>
+				</FormItem>
+			</div>
+		</LabelBox>
+		<LabelBox :title="$t('settings.assistantContentType')">
+			<div class="w-36">
+				<FormItem field="assistantContentType" feedback>
+					<Select
+						v-model="settingform.content.assistantContentType"
+						default-value="markdown">
+						<Option value="markdown">markdown</Option>
+						<Option value="raw">raw</Option>
+					</Select>
+				</FormItem>
+			</div>
+		</LabelBox>
+		<LabelBox :title="$t('settings.language')">
+			<div class="w-36">
+				<FormItem field="locale">
+					<Select v-model="settingform.language" @change="changeLanguage">
+						<Option value="en-US">English</Option>
+						<Option value="zh-CN">简体中文</Option>
+					</Select>
+				</FormItem>
+			</div>
+		</LabelBox>
 	</Form>
 </template>
 
@@ -115,7 +108,6 @@
 	import { computed, reactive, toRaw, ref } from 'vue';
 	import {
 		Upload,
-		Progress,
 		RadioGroup,
 		Radio,
 		Form,
@@ -124,16 +116,17 @@
 		Select,
 		Option,
 		FileItem,
+		Avatar,
 	} from '@arco-design/web-vue';
 	import {
 		IconMoonFill,
 		IconSunFill,
 		IconComputer,
-		IconEdit,
 	} from '@arco-design/web-vue/es/icon';
 	import { useTheme } from '@/hooks/useTheme';
 	import { useAppStore } from '@/store';
 	import defaultAvatar from '@/assets/user.jpg';
+	import LabelBox from '../components/labelBox/index.vue';
 
 	const appStore = useAppStore();
 
@@ -212,16 +205,7 @@
 		appStore.setLanguage(value);
 	};
 
-	const saveSettings = async () => {
-		const { language, theme, content } = toRaw(settingform);
-		await submitUpload();
-		appStore.updateSettings({
-			language,
-			theme,
-			content,
-		});
+	const uploadFile = () => {
+		uploadRef.value.$el.click();
 	};
-	defineExpose({
-		saveSettings,
-	});
 </script>

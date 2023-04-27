@@ -4,19 +4,22 @@
 		class="setting-box"
 		width="80vw"
 		:visible="setting.visible"
+		:footer="false"
 		:cancel-text="$t('settings.reset')"
 		:ok-text="$t('settings.save')"
-		:closable="false"
-		@ok="saveSettings"
-		@cancel="reset">
+		:closable="false">
 		<Layout :style="{ height: '80vh' }">
 			<LayoutSider>
 				<Menu
 					auto-open:true
 					:default-selected-keys="['user-setting']"
-					:style="{ borderRadius: '8px', height: '100%' }"
+					:style="{
+						borderRadius: '8px',
+						height: '100%',
+					}"
 					:collapsed="false"
 					:auto-open="true"
+					level-indent="0"
 					@menuItemClick="onClickMenuItem">
 					<SubMenu title="常规设置">
 						<MenuItem key="user-setting">
@@ -28,9 +31,6 @@
 					</SubMenu>
 					<SubMenu title="一级标题1">
 						<MenuItem key="demo-setting"> 二级标题 </MenuItem>
-					</SubMenu>
-					<SubMenu title="一级标题2">
-						<MenuItem key="demo-setting-2"> 二级标题2 </MenuItem>
 					</SubMenu>
 				</Menu>
 			</LayoutSider>
@@ -62,7 +62,6 @@
 		Button,
 	} from '@arco-design/web-vue';
 	import { IconClose } from '@arco-design/web-vue/es/icon';
-	import defaultState from '@/config/app.json';
 	import UserSetting from './userSetting/index.vue';
 	import ChagptSetting from './chatgptSetting/index.vue';
 	import DemoSetting from './demoSetting/index.vue';
@@ -83,18 +82,6 @@
 		visible: appStore.globalSettings,
 		selectedKeys: appStore.selectedKeys,
 	}));
-
-	const reset = () => {
-		appStore.updateSettings(defaultState);
-	};
-
-	const saveSettings = () => {
-		// @ts-ignore
-		childRef.value?.saveSettings();
-		appStore.updateSettings({
-			globalSettings: false,
-		});
-	};
 
 	const closeModal = () => {
 		appStore.updateSettings({
