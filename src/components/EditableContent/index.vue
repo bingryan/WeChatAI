@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	// TODO: add other feat(eg: export data)
-	import { computed, toRefs, watch, onMounted } from 'vue';
+	import { computed, ref, toRefs, watch, onMounted } from 'vue';
 	import { useChatStore } from '@/store';
 	import { Notification } from '@arco-design/web-vue';
 	import { invoke } from '@tauri-apps/api/tauri';
@@ -8,7 +8,7 @@
 	interface Props {
 		modelValue: string;
 		placeholder?: string;
-		rows?: number;
+		style: unknown;
 	}
 
 	interface Emit {
@@ -17,21 +17,24 @@
 
 	const props = withDefaults(defineProps<Props>(), {
 		placeholder: '',
-		rows: 4,
+		style: () => ({}),
 	});
 	const emit = defineEmits<Emit>();
 
-	const { modelValue, placeholder, rows } = toRefs(props);
+	const editableContentRef = ref<HTMLElement | null>(null);
 
-	const textareaValue = modelValue;
+	const { modelValue, placeholder } = toRefs(props);
 
 	watch(modelValue, (value) => {
 		if (
+			value === '' ||
 			value === undefined ||
 			Object.prototype.toString.call(value) === '[object Null]'
 		) {
-			console.log("modelValue's value is undefined or null");
-			textareaValue.value = '';
+			modelValue.value = '';
+			if (editableContentRef.value) {
+				editableContentRef.value.innerHTML = '';
+			}
 		}
 	});
 
@@ -39,15 +42,9 @@
 		emit('update:modelValue', value);
 	};
 	const handleInput = (e: Event) => {
-		const { value } = e.target as HTMLInputElement;
-		updateValue(value);
-	};
-
-	const handleSendMessage = (e: Event) => {
-		// const textContent = e.target.innerText.trim();
 		const { innerText } = e.target as HTMLDivElement;
 		if (innerText) {
-			console.log('发送消息:', innerText);
+			// dompurify.sanitize(innerText);
 			updateValue(innerText.trim());
 		}
 	};
@@ -96,22 +93,39 @@
 	};
 
 	onMounted(() => {
-		const textarea = document.querySelector('textarea');
-		if (textarea) {
-			textarea.focus();
-			textarea.addEventListener('paste', (event) => {
+		const editableContent = document.getElementById('editableContent');
+		if (editableContent) {
+			editableContent.focus();
+			editableContent.addEventListener('paste', (event) => {
+				event.preventDefault();
 				const items = event.clipboardData && event.clipboardData.items;
 				if (items) {
 					for (let i = 0; i < items.length; i += 1) {
+						// text
+						if (items[i].type.indexOf('text/plain') !== -1) {
+							items[i].getAsString((str) => {
+								// when str is html tag, use insertHTML
+								// when str is plain text, use insertText
+								document.execCommand('insertText', false, str);
+							});
+						}
+
+						// image
 						if (items[i].type.indexOf('image') !== -1) {
 							const blob = items[i].getAsFile();
 							const reader = new FileReader();
-							reader.onload = () => {
-								const imgDataUrl = reader.result;
-								textarea.setRangeText(`<img src="${imgDataUrl}">`);
-							};
 							if (blob) {
 								reader.readAsDataURL(blob);
+								reader.onloadend = () => {
+									const imageSrc = reader.result;
+									if (imageSrc) {
+										const img = document.createElement('img');
+										img.src = imageSrc as string;
+										img.style.width = '160px';
+										img.style.height = '80px';
+										editableContent.appendChild(img);
+									}
+								};
 							}
 						}
 					}
@@ -278,15 +292,15 @@
 			</div>
 		</div>
 		<div class="px-4 py-2 bg-white dark:bg-[#111111]">
-			<textarea
-				ref="textareaRef"
-				:value="textareaValue"
-				required
+			<div
+				id="editableContent"
+				ref="editableContentRef"
+				contenteditable="true"
 				:placeholder="placeholder"
 				class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-[#111111] focus:ring-0 dark:text-white dark:placeholder-gray-400 border-none resize-none outline-none"
-				:rows="rows"
+				:style="style"
 				@input="handleInput">
-			</textarea>
+			</div>
 		</div>
 	</div>
 </template>
