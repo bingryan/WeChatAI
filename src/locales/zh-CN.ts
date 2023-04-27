@@ -10,6 +10,10 @@ export default {
 		userContentType: '用户内容',
 		assistantContentType: '助手内容',
 		chatgptConfig: 'chatgpt配置 (新键聊天界面的默认配置)',
+		menu: {
+			userConfig: '用户设置',
+			chatgptConfig: 'chatgpt 设置',
+		},
 	},
 	rebot: {
 		tip: '正在处理',
