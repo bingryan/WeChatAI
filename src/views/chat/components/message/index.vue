@@ -6,6 +6,7 @@
 
 	interface Props {
 		time: string;
+		index: number;
 		content: string;
 		role: string;
 		loading?: boolean;
@@ -42,6 +43,7 @@
 				<TextComponent
 					ref="textRef"
 					:is-user="isUser"
+					:index="props.index"
 					:content="props.content"
 					:loading="props.loading" />
 			</div>

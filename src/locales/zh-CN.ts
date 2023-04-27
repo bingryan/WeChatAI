@@ -17,6 +17,7 @@ export default {
 	common: {
 		edit: '编辑',
 		delete: '删除',
+		copy: '复制',
 		newChat: '新建聊天',
 		editChat: '编辑聊天',
 		saveSuccess: '导出成功',
