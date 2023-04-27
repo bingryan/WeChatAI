@@ -144,13 +144,12 @@ export const useChatStore = defineStore(ID, {
 
 		/**
 		 * remove single record at cache by id
-		 * TODO: 处理
 		 * @param id
 		 */
-		async removeCache(id: number) {
+		async removeCache(id: number, dataIndex: number) {
 			const cacheIndex = this.getCacheIndex(id);
 			if (cacheIndex !== -1) {
-				this.chatCache.splice(cacheIndex, 1);
+				this.chatCache[cacheIndex].data.splice(dataIndex, 1);
 			}
 			this.reloadRoute(id);
 		},

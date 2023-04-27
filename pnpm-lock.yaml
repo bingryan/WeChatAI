@@ -4,6 +4,7 @@ specifiers:
   '@arco-design/web-vue': ^2.44.7
   '@commitlint/cli': ^17.5.1
   '@commitlint/config-conventional': ^17.4.4
+  '@imengyu/vue3-context-menu': ^1.2.5
   '@tauri-apps/api': ^1.2.0
   '@tauri-apps/cli': ^1.2.2
   '@traptitech/markdown-it-katex': ^3.6.0
@@ -59,6 +60,7 @@ specifiers:
   vuedraggable: ^4.1.0
 
 dependencies:
+  '@imengyu/vue3-context-menu': registry.npmmirror.com/@imengyu/vue3-context-menu/1.2.5
   '@tauri-apps/api': registry.npmmirror.com/@tauri-apps/api/1.2.0
   '@traptitech/markdown-it-katex': registry.npmmirror.com/@traptitech/markdown-it-katex/3.6.0
   '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.13.0_vue@3.2.47
@@ -69,7 +71,7 @@ dependencies:
   markdown-it-highlightjs: registry.npmmirror.com/markdown-it-highlightjs/4.0.1
   markdown-it-task-lists: registry.npmmirror.com/markdown-it-task-lists/2.1.1
   pinia: registry.npmmirror.com/pinia/2.0.35_dtjfskxukdxv24psui2m5c75zy
-  tauri-plugin-store-api: github.com/tauri-apps/tauri-plugin-store/df267506bf12de451762f3f4b7f929ebed1421c9
+  tauri-plugin-store-api: github.com/tauri-apps/tauri-plugin-store/f4ef29684e4a32eddf51befaae98a5e498df8574
   vooks: registry.npmmirror.com/vooks/0.2.12_vue@3.2.47
   vue: registry.npmmirror.com/vue/3.2.47
   vue-i18n: registry.npmmirror.com/vue-i18n/9.2.2_vue@3.2.47
@@ -120,8 +122,8 @@ devDependencies:
 
 packages:
 
-  github.com/tauri-apps/tauri-plugin-store/df267506bf12de451762f3f4b7f929ebed1421c9:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-store/tar.gz/df267506bf12de451762f3f4b7f929ebed1421c9}
+  github.com/tauri-apps/tauri-plugin-store/f4ef29684e4a32eddf51befaae98a5e498df8574:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-store/tar.gz/f4ef29684e4a32eddf51befaae98a5e498df8574}
     name: tauri-plugin-store-api
     version: 0.0.0
     dependencies:
@@ -952,6 +954,12 @@ packages:
     name: '@humanwhocodes/object-schema'
     version: 1.2.1
     dev: true
+
+  registry.npmmirror.com/@imengyu/vue3-context-menu/1.2.5:
+    resolution: {integrity: sha512-Kf04lnWTomyu7xIE9t9sAoSvP9dMfrAhuhFbDxMge/N9I07u2UywcS2Awin/5UjWTqCtqgTsaWguGGR9qCw8/g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@imengyu/vue3-context-menu/-/vue3-context-menu-1.2.5.tgz}
+    name: '@imengyu/vue3-context-menu'
+    version: 1.2.5
+    dev: false
 
   registry.npmmirror.com/@intlify/core-base/9.2.2:
     resolution: {integrity: sha512-JjUpQtNfn+joMbrXvpR4hTF8iJQ2sEFzzK3KIESOx+f+uwIjgw20igOyaIdhfsVVBCds8ZM64MoeNSx+PHQMkA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@intlify/core-base/-/core-base-9.2.2.tgz}

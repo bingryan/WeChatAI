@@ -257,6 +257,7 @@
 							v-for="(item, index) of cacheData"
 							:key="index"
 							:time="item.time"
+							:index="index"
 							:content="item.content"
 							:role="item.role"
 							:loading="loading" />

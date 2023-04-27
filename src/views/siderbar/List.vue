@@ -6,7 +6,9 @@
 		ghost-class="ghost"
 		@end="onDragEnd">
 		<template #item="{ element }">
-			<div class="list-group-item">
+			<div
+				class="list-group-item"
+				@contextmenu.prevent="onContextMenu($event, element.id)">
 				<button
 					class="flex items-center w-full px-5 py-2 transition-colors duration-200 gap-x-2 focus:outline-none"
 					:class="isActive(element.id) && ['bg-[#f2f3f5]', 'dark:bg-[#363636]']"
@@ -16,27 +18,8 @@
 							<span
 								class="h-2 w-2 rounded-full bg-emerald-500 absolute right-0.5 ring-1 ring-white bottom-0 z-50">
 							</span>
-							<Popover position="right" trigger="click">
-								<Avatar :image-url="chatGPTLogo" />
-								<template #content>
-									<div class="w-14">
-										<p
-											class="hover:bg-[#6098f7]"
-											@click="deleteSelect(element.id)"
-											>{{ $t('common.delete') }}</p
-										>
-										<p
-											class="hover:bg-[#6098f7]"
-											@click="editSelect(element.id)"
-											>{{ $t('common.edit') }}</p
-										>
-									</div>
-								</template>
-							</Popover>
 						</template>
-						<template v-else>
-							<Avatar :image-url="chatGPTLogo" />
-						</template>
+						<Avatar :image-url="chatGPTLogo" />
 					</div>
 					<div class="text-left rtl:text-right">
 						<h1
@@ -54,11 +37,15 @@
 	import Draggable from 'vuedraggable';
 	import chatGPTLogo from '@/assets/logo/chatgpt.png';
 	import { useChatStore, useAppStore } from '@/store';
-	import { computed } from 'vue';
-	import { Avatar, Popover } from '@arco-design/web-vue';
+	import { computed, h } from 'vue';
+	import { Avatar } from '@arco-design/web-vue';
+	import ContextMenu from '@imengyu/vue3-context-menu';
+	import type { MenuOptions } from '@imengyu/vue3-context-menu';
+	import { useI18n } from 'vue-i18n';
 
 	const chatStore = useChatStore();
 	const appStore = useAppStore();
+	const { t } = useI18n();
 
 	const chatList = computed(() => {
 		return chatStore.chatSetting;
@@ -86,5 +73,30 @@
 			chatModelVisible: true,
 			newChatModal: false,
 		});
+	}
+	async function onContextMenu(e: MouseEvent, id: number) {
+		await handleSelect(id);
+		ContextMenu.showContextMenu({
+			items: [
+				{
+					label: t('common.delete'),
+					icon: h('i', {
+						class: 'fa-solid fa-delete-left',
+					}),
+					onClick: () => deleteSelect(id),
+				},
+				{
+					label: t('common.edit'),
+					icon: h('i', {
+						class: 'fa-solid fa-pen-to-square',
+					}),
+					onClick: () => editSelect(id),
+				},
+			],
+			zIndex: 60,
+			minWidth: 100,
+			x: e.x,
+			y: e.y,
+		} as MenuOptions);
 	}
 </script>

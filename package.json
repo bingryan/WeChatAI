@@ -17,6 +17,7 @@
 		"prepare": "husky install"
 	},
 	"dependencies": {
+		"@imengyu/vue3-context-menu": "^1.2.5",
 		"@tauri-apps/api": "^1.2.0",
 		"@traptitech/markdown-it-katex": "^3.6.0",
 		"@vueuse/core": "^9.13.0",

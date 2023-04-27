@@ -21,6 +21,7 @@ export default {
 	common: {
 		edit: 'Edit',
 		delete: 'Delete',
+		copy: 'Copy',
 		newChat: 'New Chat',
 		editChat: 'Edit Chat',
 		saveSuccess: 'save success',
