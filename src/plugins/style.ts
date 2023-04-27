@@ -2,6 +2,7 @@ import '@/assets/css/index.css';
 import '@/assets/css/github-markdown.css';
 import '@/assets/css/font-awesome.min.css';
 import '@arco-design/web-vue/dist/arco.css';
+import '@/assets/css/setting-box.less';
 import ArcoVue from '@arco-design/web-vue';
 import type { App } from 'vue';
 

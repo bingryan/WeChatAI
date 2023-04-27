@@ -1,0 +1,90 @@
+.setting-box {
+	.avatar-bg {
+		background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+		height: 120px;
+		position: fixed;
+		width: calc(80vw - 200px);
+		max-width: 800px;
+	}
+	.avatar-box {
+		border: 1px solid rgba(198, 198, 198, 0.4);
+		box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.08);
+	}
+	.arco-icon {
+		opacity: 0.8;
+	}
+	.arco-menu-vertical {
+		font-size: 12px;
+	}
+
+	.arco-form-item {
+		margin-bottom: 12px;
+	}
+
+	.arco-menu-vertical .arco-menu-inner {
+		padding: 16px 8px;
+	}
+
+	.arco-menu-item {
+		line-height: 32px;
+	}
+	.arco-menu-inline-header {
+		line-height: 32px;
+		font-weight: 600;
+		pointer-events: none;
+		cursor: default;
+	}
+
+	.arco-menu-inline {
+		margin-bottom: 12px;
+	}
+
+	.arco-menu-light .arco-menu-inline-header.arco-menu-selected {
+		font-weight: 600;
+		color: unset;
+	}
+	.arco-modal {
+		max-width: 1000px;
+	}
+	.arco-modal-body {
+		padding: 0;
+	}
+	.arco-menu-icon-suffix {
+		display: none;
+	}
+	.arco-layout-sider {
+		border-radius: 16px;
+	}
+
+	.label-box {
+		padding: 8px 0;
+		.arco-form-item {
+			margin: 0;
+		}
+		border-top: 1px solid rgba(198, 198, 198, 0.2);
+
+		.arco-form-item-content-flex {
+			justify-content: flex-end;
+		}
+		.arco-form-item-wrapper-col {
+			min-width: -webkit-fill-available;
+		}
+	}
+
+	.layout-content {
+		display: flex;
+		flex-direction: column;
+		.close-icon {
+			text-align: right;
+			.arco-btn-shape-circle {
+				height: 24px;
+				width: 24px;
+			}
+		}
+		.layout-box {
+			padding: 0 32px 16px 32px;
+			flex-grow: 1;
+			overflow-y: auto;
+		}
+	}
+}

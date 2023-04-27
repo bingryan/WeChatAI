@@ -10,6 +10,10 @@ export default {
 		userContentType: 'User Content',
 		assistantContentType: 'Robot Content',
 		chatgptConfig: 'chatgpt Config (default configuration for new chat)',
+		menu: {
+			userConfig: 'user Config',
+			chatgptConfig: 'chatgpt config',
+		},
 	},
 	rebot: {
 		tip: 'processing',
