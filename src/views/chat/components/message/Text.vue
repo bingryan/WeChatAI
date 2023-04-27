@@ -81,13 +81,18 @@
 		chatStore.removeCache(+id, index);
 	}
 
+	const contextMenuTheme = computed(() => {
+		return appStore.theme === 'dark' ? 'mac dark' : 'mac';
+	});
+
 	async function onContextMenu(e: MouseEvent, index: number) {
 		ContextMenu.showContextMenu({
+			theme: contextMenuTheme.value,
 			items: [
 				{
 					label: t('common.delete'),
 					icon: h('i', {
-						class: 'fa-solid fa-delete-left',
+						class: 'fa-solid fa-trash',
 					}),
 					onClick: () => deleteSelect(index),
 				},
