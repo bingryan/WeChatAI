@@ -20,18 +20,20 @@
 					:collapsed="false"
 					:auto-open="true"
 					level-indent="0"
-					@menuItemClick="onClickMenuItem">
-					<SubMenu title="常规设置">
+					@menu-item-click="onClickMenuItem">
+					<SubMenu :title="$t('settings.options')">
 						<MenuItem key="user-setting">
 							{{ $t('settings.menu.userConfig') }}
 						</MenuItem>
+					</SubMenu>
+					<SubMenu :title="$t('settings.models')">
 						<MenuItem key="chatgpt-setting">
 							{{ $t('settings.menu.chatgptConfig') }}
 						</MenuItem>
 					</SubMenu>
-					<SubMenu title="一级标题1">
+					<!-- <SubMenu title="一级标题1">
 						<MenuItem key="demo-setting"> 二级标题 </MenuItem>
-					</SubMenu>
+					</SubMenu> -->
 				</Menu>
 			</LayoutSider>
 			<LayoutContent class="layout-content">
@@ -70,7 +72,6 @@
 
 	const selectedKey = ref('user-setting');
 
-	// {菜单key，组件}
 	const menus: any = {
 		'user-setting': UserSetting,
 		'chatgpt-setting': ChagptSetting,

@@ -11,9 +11,11 @@ export default {
 		assistantContentType: '助手内容',
 		chatgptConfig: 'chatgpt配置 (新键聊天界面的默认配置)',
 		menu: {
-			userConfig: '用户设置',
-			chatgptConfig: 'chatgpt 设置',
+			userConfig: '用户',
+			chatgptConfig: 'chatgpt',
 		},
+		options: '选项',
+		models: '模型',
 	},
 	rebot: {
 		tip: '正在处理',
@@ -21,6 +23,7 @@ export default {
 	common: {
 		edit: '编辑',
 		delete: '删除',
+		copy: '复制',
 		newChat: '新建聊天',
 		editChat: '编辑聊天',
 		saveSuccess: '导出成功',

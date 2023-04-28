@@ -1,15 +1,27 @@
 <script lang="ts" setup>
-	import { computed, ref } from 'vue';
+	import { computed, ref, h } from 'vue';
 	import markdownToHtml from '@/utils/markdown';
-	import { useAppStore } from '@/store';
+	import { useAppStore, useChatStore } from '@/store';
+	import { useRoute } from 'vue-router';
+	import ContextMenu from '@imengyu/vue3-context-menu';
+	import type { MenuOptions } from '@imengyu/vue3-context-menu';
+	import { useI18n } from 'vue-i18n';
+	import { useClipboard } from '@vueuse/core';
 
 	interface Props {
-		isUser?: boolean;
-		content?: string;
+		isUser: boolean;
+		index: number;
+		content: string;
 		loading?: boolean;
 	}
 
 	const appStore = useAppStore();
+	const chatStore = useChatStore();
+	const { t } = useI18n();
+	const { copy } = useClipboard();
+	const route = useRoute();
+
+	const { id } = route.params as { id: string };
 
 	const userLightBgColor = computed(() => {
 		return appStore.content.userLightBackgroundColor;
@@ -64,10 +76,47 @@
 	});
 
 	defineExpose({ textRef });
+
+	function deleteSelect(index: number) {
+		chatStore.removeCache(+id, index);
+	}
+
+	const contextMenuTheme = computed(() => {
+		return appStore.theme === 'dark' ? 'mac dark' : 'mac';
+	});
+
+	async function onContextMenu(e: MouseEvent, index: number) {
+		ContextMenu.showContextMenu({
+			theme: contextMenuTheme.value,
+			items: [
+				{
+					label: t('common.delete'),
+					icon: h('i', {
+						class: 'fa-solid fa-trash',
+					}),
+					onClick: () => deleteSelect(index),
+				},
+				{
+					label: t('common.copy'),
+					icon: h('i', {
+						class: 'fa fa-clipboard',
+					}),
+					onClick: () => copy(props.content),
+				},
+			],
+			zIndex: 60,
+			minWidth: 100,
+			x: e.x,
+			y: e.y,
+		} as MenuOptions);
+	}
 </script>
 
 <template>
-	<div class="text-wrap min-w-[20px] rounded-md p-3" :style="bdStyle">
+	<div
+		class="text-wrap min-w-[20px] rounded-md p-3"
+		:style="bdStyle"
+		@contextmenu.prevent="onContextMenu($event, props.index)">
 		<div ref="textRef" class="leading-relaxed break-words">
 			<div v-if="isRenderMarkdown" class="markdown-body" v-html="text" />
 			<div v-else class="whitespace-pre-wrap" v-text="text" />

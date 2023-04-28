@@ -66,7 +66,7 @@
 				</FormItem>
 			</div>
 		</LabelBox>
-		<LabelBox title="reply count">
+		<LabelBox title="reply count" desc="default 1">
 			<div class="w-36">
 				<FormItem field="reply_count" feedback>
 					<Input
@@ -75,7 +75,7 @@
 				</FormItem>
 			</div>
 		</LabelBox>
-		<LabelBox title="contextSize">
+		<LabelBox title="context size" desc="chat records send to chatgpt">
 			<div class="w-36">
 				<FormItem field="context_size" feedback>
 					<Input
@@ -103,12 +103,15 @@
 				</FormItem>
 			</div>
 		</LabelBox>
-		<LabelBox title="sysMessage">
+		<LabelBox
+			title="system message"
+			desc="gpt-3.5-turbo-0301 does not always pay strong attention to system messages. Future models will be trained to pay stronger attention to system messages.">
 			<div class="w-96">
 				<FormItem field="sys message" feedback>
 					<Textarea
 						v-model="settingform.chatgptInfo.system_message"
-						show-word-limit />
+						show-word-limit
+						auto-size />
 				</FormItem>
 			</div>
 		</LabelBox>
