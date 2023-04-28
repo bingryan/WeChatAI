@@ -7,7 +7,7 @@
 				<FormItem field="openaiKey" :validate-trigger="['change', 'input']">
 					<InputPassword
 						v-model="settingform.chatgptInfo.api_key"
-						placeholder="Your Open AI Key..." />
+						placeholder="Your OpenAI API/Azure OpenAI Key..." />
 				</FormItem>
 			</div>
 		</LabelBox>

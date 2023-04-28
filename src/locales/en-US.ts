@@ -5,6 +5,7 @@ export default {
 		save: 'Save',
 		reset: 'Reset',
 		language: 'Language',
+		theme: 'Theme',
 		userBackgroundColor: 'User Color',
 		assistantBackgroundColor: 'Robot Color',
 		userContentType: 'User Content',
@@ -16,6 +17,8 @@ export default {
 		},
 		options: 'options',
 		models: 'models',
+		sidebar: 'Sidebar',
+		sidebarDes: 'Display and change the current editor mode in the status bar',
 	},
 	rebot: {
 		tip: 'processing',
