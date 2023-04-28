@@ -25,6 +25,8 @@
 
 > This project is not for reward and profit, only used for personal
 
+https://user-images.githubusercontent.com/41174435/235090423-62082481-1565-4ef6-889e-79f3dceebdba.mp4
+
 ## Screenshot
 
 ![](docs/image/WeChatAI-1.png)
