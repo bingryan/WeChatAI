@@ -26,7 +26,7 @@
 			</div>
 		</div>
 
-		<LabelBox title="Theme">
+		<LabelBox :title="$t('settings.theme')">
 			<FormItem>
 				<RadioGroup v-model="settingform.theme" @change="changeTheme">
 					<Radio value="light">
@@ -101,6 +101,13 @@
 				</FormItem>
 			</div>
 		</LabelBox>
+		<LabelBox :title="$t('settings.sidebar')" :desc="$t('settings.sidebarDes')">
+			<div class="w-36">
+				<FormItem field="sidebar">
+					<Switch v-model="settingform.sidebar" @change="changeSidebar" />
+				</FormItem>
+			</div>
+		</LabelBox>
 	</Form>
 </template>
 
@@ -112,7 +119,7 @@
 		Radio,
 		Form,
 		FormItem,
-		Input,
+		Switch,
 		Select,
 		Option,
 		FileItem,
@@ -134,6 +141,7 @@
 		language: appStore.language,
 		theme: appStore.theme,
 		content: appStore.content,
+		sidebar: appStore.sidebar,
 	});
 	const { setTheme } = useTheme();
 
@@ -203,6 +211,13 @@
 	) => {
 		// @ts-ignore
 		appStore.setLanguage(value);
+	};
+
+	const changeSidebar = (value: string | number | boolean) => {
+		// @ts-ignore
+		appStore.updateSettings({
+			sidebar: value as boolean,
+		});
 	};
 
 	const uploadFile = () => {
