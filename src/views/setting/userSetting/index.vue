@@ -153,12 +153,6 @@
 		setTheme(value);
 	};
 
-	const onFileChange = (_: any, currentFile: any) => {
-		file.value = {
-			...currentFile,
-		};
-	};
-
 	async function uploadFileItem(fileItem: FileItem): Promise<void> {
 		try {
 			const response = await fetch(
@@ -192,6 +186,12 @@
 		} catch (error) {
 			console.log('submitUpload error:', error);
 		}
+	};
+	const onFileChange = (_: any, currentFile: any) => {
+		file.value = {
+			...currentFile,
+		};
+		submitUpload();
 	};
 
 	const changeLanguage = (
