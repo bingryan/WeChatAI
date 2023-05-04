@@ -71,7 +71,7 @@ dependencies:
   markdown-it-highlightjs: registry.npmmirror.com/markdown-it-highlightjs/4.0.1
   markdown-it-task-lists: registry.npmmirror.com/markdown-it-task-lists/2.1.1
   pinia: registry.npmmirror.com/pinia/2.0.35_dtjfskxukdxv24psui2m5c75zy
-  tauri-plugin-store-api: github.com/tauri-apps/tauri-plugin-store/f4ef29684e4a32eddf51befaae98a5e498df8574
+  tauri-plugin-store-api: github.com/tauri-apps/tauri-plugin-store/0558a1f6c869ae0afdb0181dfa1ea31be8cf4893
   vooks: registry.npmmirror.com/vooks/0.2.12_vue@3.2.47
   vue: registry.npmmirror.com/vue/3.2.47
   vue-i18n: registry.npmmirror.com/vue-i18n/9.2.2_vue@3.2.47
@@ -122,8 +122,8 @@ devDependencies:
 
 packages:
 
-  github.com/tauri-apps/tauri-plugin-store/f4ef29684e4a32eddf51befaae98a5e498df8574:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-store/tar.gz/f4ef29684e4a32eddf51befaae98a5e498df8574}
+  github.com/tauri-apps/tauri-plugin-store/0558a1f6c869ae0afdb0181dfa1ea31be8cf4893:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-store/tar.gz/0558a1f6c869ae0afdb0181dfa1ea31be8cf4893}
     name: tauri-plugin-store-api
     version: 0.0.0
     dependencies:
