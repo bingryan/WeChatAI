@@ -13,3 +13,9 @@ declare module 'markdown-it-task-lists' {
 	const classes: any;
 	export default classes;
 }
+
+// handlebars-helpers
+declare module 'handlebars-helpers' {
+	const classes: any;
+	export default classes;
+}
