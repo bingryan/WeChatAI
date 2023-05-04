@@ -76,13 +76,34 @@
 							title="Edit Prompt"
 							@ok="handleOk"
 							@cancel="handleCancel">
-							<Textarea
-								v-model="promptForm.content"
-								:auto-size="{
-									minRows: 4,
-									maxRows: 20,
-								}"
-								style="margin: -20px 0; outline: none; border: none" />
+							<Form ref="formRef" :model="promptForm">
+								<div class="mb-1">
+									<label
+										for="name"
+										class="block text-sm font-medium text-gray-900 dark:text-white"
+										>Name</label
+									>
+									<Input v-model="promptForm.name" default-value="new prompt" />
+								</div>
+
+								<div class="mb-1">
+									<label
+										for="content"
+										class="block text-sm font-medium text-gray-900 dark:text-white"
+										>Content</label
+									>
+									<div class="w-full">
+										<Textarea
+											v-model="promptForm.content"
+											show-word-limit
+											:auto-size="{
+												minRows: 3,
+												maxRows: 10,
+											}"
+											style="outline: none; border: none" />
+									</div>
+								</div>
+							</Form>
 						</Modal>
 					</div>
 				</div>
@@ -92,10 +113,25 @@
 </template>
 
 <script setup lang="ts">
-	import { Table, Modal, Textarea } from '@arco-design/web-vue';
-	import { ref, reactive } from 'vue';
+	import {
+		Table,
+		Modal,
+		Input,
+		Textarea,
+		Form,
+		FormItem,
+	} from '@arco-design/web-vue';
+	import { ref, reactive, computed } from 'vue';
+	import { usePromptStore } from '@/store';
+	import LabelInput from '../components/labelInput/index.vue';
+
+	const promptStore = usePromptStore();
+
+	const promptList = computed(() => promptStore.getTemplate);
 
 	const promptForm = reactive({
+		key: '',
+		name: 'new prompt',
 		content: '',
 	});
 
