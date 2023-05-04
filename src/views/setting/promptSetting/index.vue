@@ -44,7 +44,8 @@
 				</Upload>
 
 				<button
-					class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+					class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+					@click="handleSaveToJson">
 					<i class="fa-solid fa-download"></i>
 					<span>Export</span>
 				</button>
@@ -142,10 +143,12 @@
 		Textarea,
 		Form,
 		Upload,
+		Notification,
 		FileItem,
 	} from '@arco-design/web-vue';
 	import { ref, reactive, computed } from 'vue';
 	import { usePromptStore } from '@/store';
+	import { invoke } from '@tauri-apps/api/tauri';
 
 	const promptStore = usePromptStore();
 	const file = ref<FileItem | null>(null);
@@ -251,6 +254,31 @@
 			...currentFile,
 		};
 		submitUpload();
+	};
+
+	async function saveToFile(filename: string, content: string) {
+		try {
+			await invoke('write_to_file', { filename, content }).then(() => {
+				Notification.success({
+					title: 'File saved successfully',
+					content: `$HOME/Downloads/${filename}`,
+				});
+			});
+			console.log('File saved successfully');
+		} catch (error) {
+			console.error('Error saving file:', error);
+		}
+	}
+	const exportChatToJson = () => {
+		const data: Partial<App.PromptTemplate>[] = promptList.value;
+		data.forEach((item) => {
+			delete item.key;
+		});
+		const title = `prompt-${Date.now()}`;
+		saveToFile(`${title}.json`, JSON.stringify(data));
+	};
+	const handleSaveToJson = () => {
+		exportChatToJson();
 	};
 </script>
 
