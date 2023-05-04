@@ -63,9 +63,6 @@
 					<div
 						class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
 						<Table :pagination="false" :columns="columns" :data="promptList">
-							<!-- Q: template数据为什么不及时更新? -->
-							<!-- A: 由于template数据是从store中获取的,所以需要在store中更新数据 -->
-
 							<template #content="{ record }">
 								<Textarea
 									:default-value="record.content"

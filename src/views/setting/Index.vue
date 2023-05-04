@@ -31,7 +31,7 @@
 							{{ $t('settings.menu.chatgptConfig') }}
 						</MenuItem>
 					</SubMenu>
-					<SubMenu title="Other">
+					<SubMenu title="other">
 						<MenuItem key="prompt-setting"> prompt </MenuItem>
 					</SubMenu>
 				</Menu>
