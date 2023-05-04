@@ -27,11 +27,20 @@
 					class="block w-full py-2 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
 			</div>
 			<div class="flex items-center mt-4 gap-x-3">
-				<button
-					class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
-					<i class="fa-solid fa-cloud-arrow-up"></i>
-					<span>Import</span>
-				</button>
+				<Upload
+					ref="uploadRef"
+					action="/"
+					:auto-upload="false"
+					:show-file-list="false"
+					@change="onFileChange">
+					<template #upload-button>
+						<button
+							class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+							<i class="fa-solid fa-cloud-arrow-up"></i>
+							<span>Import</span>
+						</button>
+					</template>
+				</Upload>
 
 				<button
 					class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
@@ -39,7 +48,8 @@
 					<span>Export</span>
 				</button>
 				<button
-					class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+					class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600"
+					@click="handleAddPromptClick">
 					<i class="fa-sharp fa-solid fa-plus"></i>
 					<span>Add</span>
 				</button>
@@ -50,7 +60,10 @@
 				<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
 					<div
 						class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-						<Table :pagination="false" :columns="columns" :data="data">
+						<Table :pagination="false" :columns="columns" :data="promptList">
+							<!-- Q: template数据为什么不及时更新? -->
+							<!-- A: 由于template数据是从store中获取的,所以需要在store中更新数据 -->
+
 							<template #content="{ record }">
 								<Textarea
 									:default-value="record.content"
@@ -63,7 +76,7 @@
 							<template #optional="{ record }">
 								<button
 									class="px-1 py-1 text-right text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
-									@click="handleClick(record)">
+									@click="handleEditPromptClick(record)">
 									<i class="fa-solid fa-ellipsis-vertical"></i>
 								</button>
 							</template>
@@ -71,11 +84,19 @@
 						<Modal
 							id="menu-prompt"
 							v-model:visible="visible"
+							:mask-closable="false"
+							:closable="false"
 							class="prompt-box"
 							width="40vw"
 							title="Edit Prompt"
+							:ok-text="newPromptModal ? 'Add' : 'Save'"
+							:cancel-text="newPromptModal ? 'Cancel' : 'Delete'"
 							@ok="handleOk"
 							@cancel="handleCancel">
+							<template v-if="newPromptModal" #title>
+								{{ $t('common.newPrompt') }}</template
+							>
+							<template v-else #title> {{ $t('common.editPrompt') }} </template>
 							<Form ref="formRef" :model="promptForm">
 								<div class="mb-1">
 									<label
@@ -119,60 +140,53 @@
 		Input,
 		Textarea,
 		Form,
-		FormItem,
+		Upload,
+		FileItem,
 	} from '@arco-design/web-vue';
 	import { ref, reactive, computed } from 'vue';
 	import { usePromptStore } from '@/store';
-	import LabelInput from '../components/labelInput/index.vue';
 
 	const promptStore = usePromptStore();
+	const file = ref<FileItem | null>(null);
 
 	const promptList = computed(() => promptStore.getTemplate);
 
+	const visible = ref(false);
+	const newPromptModal = ref(true);
 	const promptForm = reactive({
 		key: '',
 		name: 'new prompt',
 		content: '',
 	});
 
-	const visible = ref(false);
-
-	const handleClick = (record: any) => {
-		console.log('record:', record);
+	const handleAddPromptClick = () => {
+		newPromptModal.value = true;
 		visible.value = true;
 	};
+
+	const handleEditPromptClick = (record: any) => {
+		newPromptModal.value = false;
+		visible.value = true;
+		promptForm.key = record.key;
+		promptForm.name = record.name;
+		promptForm.content = record.content;
+	};
 	const handleOk = () => {
+		const { name, content } = promptForm;
+		if (newPromptModal.value) {
+			const key = Date.now().toString();
+			promptStore.addTemplate({ key, name, content });
+		} else {
+			promptStore.updateTemplate(promptForm);
+		}
 		visible.value = false;
 	};
 	const handleCancel = () => {
+		if (!newPromptModal.value) {
+			promptStore.removeTemplate(promptForm.key);
+		}
 		visible.value = false;
 	};
-
-	function getRandomInt(min: number, max: number) {
-		return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
-
-	function getRandomString(length: number) {
-		let result = '';
-		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-		const charactersLength = characters.length;
-		for (let i = 0; i < length; i += 1) {
-			result += characters.charAt(Math.floor(Math.random() * charactersLength));
-		}
-		return result;
-	}
-
-	function generateRandomArray(size: number): App.PromptTemplate[] {
-		const array = [];
-		for (let i = 0; i < size; i += 1) {
-			array.push({
-				key: (i + 1).toString(),
-				name: getRandomString(10),
-				content: `${getRandomString(80)}@example.com`,
-			});
-		}
-		return array;
-	}
 
 	const columns = [
 		{
@@ -191,7 +205,41 @@
 		},
 	];
 
-	const data = generateRandomArray(40);
+	const submitUpload = async () => {
+		try {
+			if (!file.value?.file) {
+				return;
+			}
+			const fileReader = new FileReader();
+			fileReader.readAsText(file.value.file);
+			fileReader.onload = () => {
+				const { result } = fileReader;
+				if (typeof result === 'string') {
+					const templateList: App.PromptTemplate[] = JSON.parse(result);
+					let key = Date.now().toString();
+					templateList.forEach((template) => {
+						const { name, content } = template;
+						const data = {
+							key,
+							name,
+							content,
+						};
+						promptStore.addTemplate(data);
+						// key must unique
+						key = `${+key + 1}`;
+					});
+				}
+			};
+		} catch (error) {
+			console.log('submitUpload error:', error);
+		}
+	};
+	const onFileChange = (_: any, currentFile: any) => {
+		file.value = {
+			...currentFile,
+		};
+		submitUpload();
+	};
 </script>
 
 <style scoped></style>

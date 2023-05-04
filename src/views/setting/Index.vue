@@ -32,7 +32,7 @@
 						</MenuItem>
 					</SubMenu>
 					<SubMenu title="Other">
-						<MenuItem key="prompt-setting"> Prompt </MenuItem>
+						<MenuItem key="prompt-setting"> prompt </MenuItem>
 					</SubMenu>
 				</Menu>
 			</LayoutSider>

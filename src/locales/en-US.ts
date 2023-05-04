@@ -30,5 +30,7 @@ export default {
 		newChat: 'New Chat',
 		editChat: 'Edit Chat',
 		saveSuccess: 'save success',
+		newPrompt: 'New Prompt Template',
+		editPrompt: 'Edit Prompt Template',
 	},
 };

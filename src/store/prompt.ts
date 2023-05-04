@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import defaultState from '@/config/app.json';
+import defaultState from '@/config/prompt.json';
 
 const ID = 'prompt-store';
 
@@ -25,12 +25,12 @@ export const usePromptStore = defineStore(ID, {
 			setState(this.$state);
 		},
 
-		async addTemplate(template: App.PromptTemplate) {
-			this.template.push(template);
+		addTemplate(template: App.PromptTemplate) {
+			this.template.unshift(template);
 			setState(this.$state);
 		},
 
-		async updateTemplate(template: App.PromptTemplate) {
+		updateTemplate(template: App.PromptTemplate) {
 			this.template = this.template.map((item) => {
 				if (item.key === template.key) {
 					return template;
@@ -39,7 +39,7 @@ export const usePromptStore = defineStore(ID, {
 			});
 			setState(this.$state);
 		},
-		async removeTemplate(key: string) {
+		removeTemplate(key: string) {
 			this.template = this.template.filter((item) => item.key !== key);
 			setState(this.$state);
 		},
