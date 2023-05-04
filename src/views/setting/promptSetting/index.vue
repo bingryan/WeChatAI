@@ -146,12 +146,12 @@
 		{
 			title: 'Content',
 			slotName: 'content',
-			align: 'center',
+			align: 'center' as 'center' | 'left' | 'right' | undefined,
 		},
 		{
 			title: 'Optional',
 			slotName: 'optional',
-			align: 'right',
+			align: 'right' as 'center' | 'left' | 'right' | undefined,
 		},
 	];
 
