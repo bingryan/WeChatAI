@@ -126,7 +126,7 @@
 		return result;
 	}
 
-	function generateRandomArray(size: number): App.Prompt[] {
+	function generateRandomArray(size: number): App.PromptTemplate[] {
 		const array = [];
 		for (let i = 0; i < size; i += 1) {
 			array.push({

@@ -1,8 +1,12 @@
 declare namespace App {
-	interface Prompt {
+	interface PromptTemplate {
 		key: string;
 		name: string;
 		content: string;
+	}
+
+	interface Prompt {
+		template: PromptTemplate[];
 	}
 	interface Content {
 		userLightBackgroundColor: string;
