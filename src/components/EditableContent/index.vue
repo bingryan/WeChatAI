@@ -4,6 +4,7 @@
 	import { useChatStore } from '@/store';
 	import { Notification } from '@arco-design/web-vue';
 	import { invoke } from '@tauri-apps/api/tauri';
+	import AutoBlockMenu from '@/components/AutoBlockMenu/index.vue';
 
 	interface Props {
 		modelValue: string;
@@ -51,6 +52,7 @@
 
 	// -------------------handle event-----------------------------------------
 	const chatStore = useChatStore();
+	const menu = ref<typeof AutoBlockMenu | null>(null);
 
 	const getCurrentCacheData = computed(() => {
 		const currentActiveId = chatStore.current;
@@ -128,6 +130,15 @@
 								};
 							}
 						}
+					}
+				}
+			});
+			editableContent.addEventListener('keydown', (event) => {
+				if (event.key === '/') {
+					// open menu
+					if (menu.value && !menu.value.open) {
+						menu.value.open = true;
+						menu.value.openedWithSlash = true;
 					}
 				}
 			});
@@ -291,6 +302,7 @@
 				</div>
 			</div>
 		</div>
+		<AutoBlockMenu ref="menu" />
 		<div class="px-4 py-2 bg-white dark:bg-[#111111]">
 			<div
 				id="editableContent"
