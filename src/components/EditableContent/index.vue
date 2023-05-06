@@ -94,6 +94,33 @@
 		exportChatToJson();
 	};
 
+	const getLastChild = () => {
+		const editableContent = document.getElementById('editableContent');
+		console.log(editableContent?.firstChild, editableContent?.lastChild);
+		if ((editableContent?.lastChild as any)?.length === 1) {
+			return editableContent?.firstChild;
+		}
+		return editableContent?.lastChild;
+	};
+
+	const getEndCoordinates = () => {
+		let x = 0;
+		let y = 0;
+
+		const lastChild = getLastChild();
+		console.log({ lastChild });
+
+		if (lastChild) {
+			const range = document.createRange();
+			range.selectNodeContents(lastChild);
+			range.collapse();
+			const rect = range.getBoundingClientRect();
+			x = rect.left;
+			y = rect.top;
+		}
+		return { x, y };
+	};
+
 	onMounted(() => {
 		const editableContent = document.getElementById('editableContent');
 		if (editableContent) {
@@ -135,11 +162,16 @@
 			});
 			editableContent.addEventListener('keydown', (event) => {
 				if (event.key === '/') {
-					// open menu
-					if (menu.value && !menu.value.open) {
-						menu.value.open = true;
-						menu.value.openedWithSlash = true;
-					}
+					// 菜单渲染当前位置(有延时，第一时间无法获取/所处位置，需异步处理)
+					setTimeout(() => {
+						if (menu.value && !menu.value.open) {
+							menu.value.open = true;
+							menu.value.active = 0;
+							menu.value.openedWithSlash = true;
+							const { x, y } = getEndCoordinates();
+							menu.value.changeMenuPosition(x, y);
+						}
+					});
 				}
 			});
 		}
