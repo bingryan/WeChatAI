@@ -22,6 +22,8 @@
 		"@traptitech/markdown-it-katex": "^3.6.0",
 		"@vueuse/core": "^9.13.0",
 		"eventsource-parser": "^1.0.0",
+		"handlebars": "^4.7.7",
+		"handlebars-helpers": "^0.10.0",
 		"highlight.js": "^11.7.0",
 		"markdown-it": "^13.0.1",
 		"markdown-it-fancy-lists": "^1.2.1",

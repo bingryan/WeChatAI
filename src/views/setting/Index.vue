@@ -31,9 +31,9 @@
 							{{ $t('settings.menu.chatgptConfig') }}
 						</MenuItem>
 					</SubMenu>
-					<!-- <SubMenu title="一级标题1">
-						<MenuItem key="demo-setting"> 二级标题 </MenuItem>
-					</SubMenu> -->
+					<SubMenu title="other">
+						<MenuItem key="prompt-setting"> prompt </MenuItem>
+					</SubMenu>
 				</Menu>
 			</LayoutSider>
 			<LayoutContent class="layout-content">
@@ -67,6 +67,7 @@
 	import UserSetting from './userSetting/index.vue';
 	import ChagptSetting from './chatgptSetting/index.vue';
 	import DemoSetting from './demoSetting/index.vue';
+	import PromptSetting from './promptSetting/index.vue';
 
 	const childRef = ref(null);
 
@@ -76,6 +77,7 @@
 		'user-setting': UserSetting,
 		'chatgpt-setting': ChagptSetting,
 		'demo-setting': DemoSetting,
+		'prompt-setting': PromptSetting,
 	};
 
 	const appStore = useAppStore();

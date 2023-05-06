@@ -30,5 +30,7 @@ export default {
 		newChat: '新建聊天',
 		editChat: '编辑聊天',
 		saveSuccess: '导出成功',
+		newPrompt: '新建Prompt模版',
+		editPrompt: '编辑Prompt模版',
 	},
 };

@@ -9,3 +9,4 @@ export function setupStore(app: App) {
 
 export * from './chat';
 export * from './app';
+export * from './prompt';
