@@ -3,7 +3,8 @@
 		<div v-show="open" class="block-menu">
 			<div
 				ref="menu"
-				class="w-[10rem] lg:w-[12rem] xl:w-[16rem] absolute z-50 rounded py-1 text-neutral-700 text-sm top-20 bg-white max-h-[24rem] overflow-auto focus-visible:outline-none">
+				style="box-shadow: 0 4px 10px #0000001a"
+				class="w-[10rem] lg:w-[12rem] xl:w-[16rem] fixed z-50 rounded py-1 text-neutral-700 text-sm top-20 bg-white max-h-[16rem] overflow-auto focus-visible:outline-none">
 				<div class="text-left divide-y">
 					<div
 						v-if="searchTerm"
@@ -16,10 +17,9 @@
 						<div
 							v-for="(option, i) in promptOptions"
 							:key="i"
-							class="px-2 py-1 rounded flex items-center gap-2"
-							:class="[
-								active === i + promptOptions.length ? 'bg-neutral-100' : '',
-							]">
+							class="px-2 py-1 rounded flex items-center gap-2 cursor-pointer"
+							:class="[active === i ? 'bg-neutral-100' : '']"
+							@click="setBlockType(i)">
 							<i :class="option.icon"></i>
 							<span class="truncate">{{ option.name }}</span>
 						</div>
@@ -31,12 +31,17 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, watch, onMounted } from 'vue';
+	import { ref, computed, watch, onMounted, nextTick, reactive } from 'vue';
 	import { usePromptStore } from '@/store';
 
 	const open = ref(false);
 	const active = ref(0);
 	const searchTerm = ref('');
+
+	const cursorPosition = reactive({
+		x: 0,
+		y: 0,
+	});
 
 	const container = ref<HTMLDivElement | null>(null);
 	const menu = ref<HTMLDivElement | null>(null);
@@ -71,11 +76,34 @@
 		open.value = false;
 	};
 
+	const setBlockType = (index: number) => {
+		active.value = index;
+		setTimeout(() => {
+			open.value = false;
+		}, 500);
+	};
+
+	const setMenuPosition = async () => {
+		const menuDom: any = menu.value;
+		await nextTick();
+		menuDom.style.top = `${cursorPosition.y - menuDom.offsetHeight}px`;
+		menuDom.style.left = `${cursorPosition.x}px`;
+	};
+
+	const changeMenuPosition = async (x: number, y: number) => {
+		cursorPosition.x = x;
+		cursorPosition.y = y;
+		setMenuPosition();
+	};
+
 	onMounted(() => {
 		if (menu.value) {
-			menu.value.addEventListener('keydown', (event: KeyboardEvent) => {
-				console.log('auto block menu keydown event:', event);
+			const editableContent = document.getElementById('editableContent');
+
+			editableContent?.addEventListener('keydown', (event: KeyboardEvent) => {
+				// console.log('auto block menu keydown event:', event);
 				if (!open.value) return;
+
 				if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
 					// Support up/down navigation with keyboard
 					if (event.key === 'ArrowUp') {
@@ -93,6 +121,7 @@
 								? active.value + 1
 								: 0;
 					}
+					console.log(active.value);
 				} else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
 					// Left/right will exit menu
 					if (searchTerm.value.length === 0) open.value = false;
@@ -113,15 +142,17 @@
 					// Alphanumeric searches menu
 					searchTerm.value += event.key;
 					active.value = 0;
+					setMenuPosition();
 				} else if (event.key === 'Backspace') {
 					// Backspace closes menu if searchTerm is empty
 					if (searchTerm.value.length === 0) open.value = false;
 					else searchTerm.value = searchTerm.value.slice(0, -1);
 					active.value = 0;
+					setMenuPosition();
 				}
 			});
 
-			menu.value.addEventListener('keyup', (event: KeyboardEvent) => {
+			editableContent?.addEventListener('keyup', (event: KeyboardEvent) => {
 				console.log('auto block menu keyup event:', event);
 				if (!open.value) return;
 				if (event.key === 'Enter') {
@@ -135,5 +166,6 @@
 
 	defineExpose({
 		open,
+		changeMenuPosition,
 	});
 </script>
