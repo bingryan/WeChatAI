@@ -74,6 +74,7 @@
 	const handleEnter = () => {
 		searchTerm.value = '';
 		open.value = false;
+		console.log('"Enter" key pressed');
 	};
 
 	const setBlockType = (index: number) => {
@@ -95,6 +96,36 @@
 		cursorPosition.y = y;
 		setMenuPosition();
 	};
+
+	function insertCurrentCursor(input: string) {
+		const editableContent = document.getElementById('editableContent');
+		const selection = window.getSelection();
+
+		if (!selection || selection.rangeCount === 0) return;
+
+		const range = selection.getRangeAt(0);
+		const textNode = document.createTextNode(input);
+
+		// slash auto complete
+		const textBeforeCursor = range.startContainer.textContent?.slice(
+			range.startOffset - 1,
+			range.startOffset
+		);
+
+		if (textBeforeCursor?.endsWith('/')) {
+			const removedSlash = textBeforeCursor.slice(0, -1);
+			range.setStart(range.startContainer, range.startOffset - 1);
+			range.deleteContents();
+			range.insertNode(document.createTextNode(removedSlash));
+		}
+
+		range.insertNode(textNode);
+		range.setStartAfter(textNode);
+		range.setEndAfter(textNode);
+		selection.removeAllRanges();
+		selection.addRange(range);
+		editableContent?.focus();
+	}
 
 	onMounted(() => {
 		if (menu.value) {
@@ -126,11 +157,7 @@
 					// Left/right will exit menu
 					if (searchTerm.value.length === 0) open.value = false;
 				} else if (event.key === 'Enter') {
-					// Enter selects menu option
-
-					console.log('Enter key pressed:', event);
-					console.log('Enter key pressed:', promptOptions.value[active.value]);
-					console.log('Enter searchTerm:', searchTerm);
+					insertCurrentCursor(promptOptions.value[active.value].name);
 					handleEnter();
 					event.preventDefault();
 				} else if (event.key === 'Escape') {
@@ -153,10 +180,8 @@
 			});
 
 			editableContent?.addEventListener('keyup', (event: KeyboardEvent) => {
-				console.log('auto block menu keyup event:', event);
 				if (!open.value) return;
 				if (event.key === 'Enter') {
-					// Enter selects menu option
 					event.preventDefault();
 					event.stopPropagation();
 				}

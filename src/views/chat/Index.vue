@@ -4,15 +4,17 @@
 	import { useRoute } from 'vue-router';
 	import { router } from '@/router';
 	import { Spin } from '@arco-design/web-vue';
-	import { useChatStore } from '@/store';
+	import { useChatStore, usePromptStore } from '@/store';
 	import EditableContent from '@/components/EditableContent/index.vue';
 	import { parseDomain } from '@/utils/misc';
+	import { render, getHandlebarsVars } from '@/utils/renderer';
 	import { useCopyCode } from './hooks/useCopyCode';
 	import { useChat } from './hooks/useChat';
 	import { useScroll } from './hooks/useScroll';
 	import { Message } from './components';
 
 	const chatStore = useChatStore();
+	const promptStore = usePromptStore();
 
 	const currentActiveId = computed(() => chatStore.current);
 
@@ -126,6 +128,42 @@
 		};
 	}
 
+	function getPrompt(input: string): string {
+		// re match: -p prompt -h hh , match prompt value
+		const prompt = input.match(/-p\s+([^\s]+)/)?.[1];
+		const template = promptStore.getTemplateByName(prompt?.trim() ?? '');
+		return template ? template.content : '';
+	}
+
+	function parseOptArgs(message: string, hbVars: { [key: string]: string }) {
+		const hbVarsKeys = Object.keys(hbVars);
+
+		const separator = new RegExp(hbVarsKeys.map((e) => `-${e}`).join('|'));
+		const splitValue = message.split(separator);
+
+		const res: { [key: string]: string } = {};
+		for (let i = 0; i < hbVarsKeys.length; i += 1) {
+			const key = hbVarsKeys[i];
+			const value = splitValue[i + 1]?.trim();
+			if (key && value) {
+				res[hbVars[key]] = value;
+			}
+		}
+		return res;
+	}
+
+	function parseUserMessage(message: string) {
+		// read first line
+		const firstLine = message.split('\n')[0];
+		const template = getPrompt(firstLine);
+
+		const hbVars = getHandlebarsVars(template);
+
+		const argsParsed = parseOptArgs(message.split('\n').join(' \n '), hbVars);
+
+		return render(template, argsParsed);
+	}
+
 	async function handleConversation() {
 		const message = prompt.value;
 
@@ -139,7 +177,7 @@
 			role: 'user',
 			error: false,
 			time: new Date().getTime().toString(),
-			content: message,
+			content: parseUserMessage(message),
 		});
 
 		loading.value = true;

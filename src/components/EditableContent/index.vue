@@ -96,7 +96,6 @@
 
 	const getLastChild = () => {
 		const editableContent = document.getElementById('editableContent');
-		console.log(editableContent?.firstChild, editableContent?.lastChild);
 		if ((editableContent?.lastChild as any)?.length === 1) {
 			return editableContent?.firstChild;
 		}
@@ -108,7 +107,6 @@
 		let y = 0;
 
 		const lastChild = getLastChild();
-		console.log({ lastChild });
 
 		if (lastChild) {
 			const range = document.createRange();
@@ -162,7 +160,6 @@
 			});
 			editableContent.addEventListener('keydown', (event) => {
 				if (event.key === '/') {
-					// 菜单渲染当前位置(有延时，第一时间无法获取/所处位置，需异步处理)
 					setTimeout(() => {
 						if (menu.value && !menu.value.open) {
 							menu.value.open = true;

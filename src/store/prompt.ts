@@ -17,6 +17,11 @@ export const usePromptStore = defineStore(ID, {
 				return state.template.find((item) => item.key === key);
 			};
 		},
+		getTemplateByName(state: App.Prompt) {
+			return (name: string) => {
+				return state.template.find((item) => item.name === name);
+			};
+		},
 	},
 	actions: {
 		updatePrompt(partial: Partial<App.Prompt>) {
