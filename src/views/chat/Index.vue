@@ -156,6 +156,9 @@
 		// read first line
 		const firstLine = message.split('\n')[0];
 		const template = getPrompt(firstLine);
+		if (!template) {
+			return message;
+		}
 
 		const hbVars = getHandlebarsVars(template);
 
