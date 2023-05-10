@@ -17,6 +17,11 @@ export const usePromptStore = defineStore(ID, {
 				return state.template.find((item) => item.key === key);
 			};
 		},
+		getTemplateByName(state: App.Prompt) {
+			return (name: string) => {
+				return state.template.find((item) => item.name === name);
+			};
+		},
 	},
 	actions: {
 		updatePrompt(partial: Partial<App.Prompt>) {
@@ -26,7 +31,15 @@ export const usePromptStore = defineStore(ID, {
 		},
 
 		addTemplate(template: App.PromptTemplate) {
-			this.template.unshift(template);
+			// upset
+			const index = this.template.findIndex(
+				(item) => item.name === template.name
+			);
+			if (index >= 0) {
+				this.template[index] = template;
+			} else {
+				this.template.unshift(template);
+			}
 			setState(this.$state);
 		},
 
