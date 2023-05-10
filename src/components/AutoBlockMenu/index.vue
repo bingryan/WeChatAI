@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, watch, onMounted, nextTick, reactive } from 'vue';
+	import { ref, computed, onMounted, nextTick, reactive } from 'vue';
 	import { usePromptStore } from '@/store';
 
 	const open = ref(false);
@@ -71,12 +71,6 @@
 		});
 	});
 
-	const handleEnter = () => {
-		searchTerm.value = '';
-		open.value = false;
-		console.log('"Enter" key pressed');
-	};
-
 	const setBlockType = (index: number) => {
 		active.value = index;
 		setTimeout(() => {
@@ -98,6 +92,7 @@
 	};
 
 	function insertCurrentCursor(input: string) {
+		const editableContent = document.getElementById('editableContent');
 		const selection = window.getSelection();
 
 		if (!selection || selection.rangeCount === 0) return;
@@ -105,35 +100,26 @@
 		const range = selection.getRangeAt(0);
 		const textNode = document.createTextNode(input);
 
-		// slash auto complete
-		const textBeforeCursor = range.startContainer.textContent?.slice(
-			range.startOffset - 1,
-			range.startOffset
-		);
-
-		if (textBeforeCursor?.endsWith('/')) {
-			const removedSlash = textBeforeCursor.slice(0, -1);
-			range.setStart(range.startContainer, range.startOffset - 1);
-			range.deleteContents();
-			range.insertNode(document.createTextNode(removedSlash));
-		}
+		// replace slash and searchTerm with input
+		const termLength = searchTerm.value.length + 1;
+		const removedSearchTerm = searchTerm.value.slice(0, -termLength);
+		range.setStart(range.startContainer, range.startOffset - termLength);
+		range.deleteContents();
+		range.insertNode(document.createTextNode(removedSearchTerm));
 
 		range.insertNode(textNode);
 		range.setStartAfter(textNode);
 		range.setEndAfter(textNode);
 		selection.removeAllRanges();
 		selection.addRange(range);
-		// add space after auto complete
-		const space = document.createTextNode(' ');
-		range.insertNode(space);
-		range.setStartAfter(space);
-		range.setEndAfter(space);
-		const newRange = document.createRange();
-		newRange.setStartAfter(space);
-		newRange.setEndAfter(space);
-		selection.removeAllRanges();
-		selection.addRange(newRange);
+		editableContent?.focus();
 	}
+
+	const handleEnter = (e: Event, input: string) => {
+		insertCurrentCursor(input);
+		searchTerm.value = '';
+		open.value = false;
+	};
 
 	onMounted(() => {
 		if (menu.value) {
@@ -144,6 +130,7 @@
 				if (!open.value) return;
 
 				if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
+					// TODO: if active value not in view, scroll to it
 					// Support up/down navigation with keyboard
 					if (event.key === 'ArrowUp') {
 						// Move up
@@ -160,9 +147,9 @@
 								? active.value + 1
 								: 0;
 					}
+					event.preventDefault();
 				} else if (event.key === 'Enter') {
-					insertCurrentCursor(promptOptions.value[active.value].name);
-					handleEnter();
+					handleEnter(event, promptOptions.value[active.value].name);
 					event.preventDefault();
 				} else if (event.key === 'Escape') {
 					// Escape closes menu

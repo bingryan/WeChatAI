@@ -129,8 +129,9 @@
 	}
 
 	function getPrompt(input: string): string {
-		// re match: -p prompt -h hh , match prompt value
-		const prompt = input.match(/-p\s+([^\s]+)/)?.[1];
+		// re match: -p prompt value  -h hh , match prompt value
+		const regex = /-p\s+([\s\S]*?)(?=\s*-|\s*$)/i;
+		const prompt = input.match(regex)?.[1];
 		const template = promptStore.getTemplateByName(prompt?.trim() ?? '');
 		return template ? template.content : '';
 	}
@@ -152,14 +153,19 @@
 		return res;
 	}
 
-	function parseUserMessage(message: string) {
-		// read first line
+	const editableContentRef = ref<HTMLElement | null>(null);
+	function parseUserMessage() {
+		const editableContent = document.getElementById('editableContent');
+		const message = editableContent?.innerText;
+		if (!message) {
+			return '';
+		}
+
 		const firstLine = message.split('\n')[0];
 		const template = getPrompt(firstLine);
 		if (!template) {
 			return message;
 		}
-
 		const hbVars = getHandlebarsVars(template);
 
 		const argsParsed = parseOptArgs(message.split('\n').join(' \n '), hbVars);
@@ -179,7 +185,7 @@
 			role: 'user',
 			error: false,
 			time: new Date().getTime().toString(),
-			content: parseUserMessage(message),
+			content: parseUserMessage(),
 		});
 
 		loading.value = true;
@@ -314,6 +320,7 @@
 			<div class="w-full max-w-screen-xl overflow-auto">
 				<div class="flex items-center justify-between space-x-2">
 					<EditableContent
+						ref="editableContentRef"
 						v-model="prompt"
 						:style="{ height: '100px' }"
 						@keypress="handleEnter" />

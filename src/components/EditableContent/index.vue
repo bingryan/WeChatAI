@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	// TODO: add other feat(eg: export data)
 	import { computed, ref, toRefs, watch, onMounted } from 'vue';
 	import { useChatStore } from '@/store';
 	import { Notification } from '@arco-design/web-vue';
@@ -160,18 +159,20 @@
 			});
 			editableContent.addEventListener('keydown', (event) => {
 				if (event.key === '/') {
-					setTimeout(() => {
-						if (menu.value && !menu.value.open) {
-							menu.value.open = true;
-							menu.value.active = 0;
-							menu.value.openedWithSlash = true;
-							const { x, y } = getEndCoordinates.value;
-							menu.value.changeMenuPosition(x, y);
-						}
-					});
+					if (menu.value && !menu.value.open) {
+						menu.value.open = true;
+						menu.value.active = 0;
+						menu.value.openedWithSlash = true;
+						const { x, y } = getEndCoordinates.value;
+						menu.value.changeMenuPosition(x, y);
+					}
 				}
 			});
 		}
+	});
+
+	defineExpose({
+		editableContentRef,
 	});
 </script>
 
