@@ -7,12 +7,14 @@ export const render = (template: string, data: any) => {
 };
 
 export const getHandlebarsVars = (template: string) => {
-	const re = /(?<=\{\{\{)[^}]*(?=\}\}\})/g;
-	const matches = template.match(re);
+	const reg = /{{{\s*(\w+)\s*}}}/g;
+	const matches = template.match(reg);
 	const keys: { [key: string]: string } = { p: 'prompt' };
+
 	if (matches) {
 		for (let i = 0; i < matches.length; i += 1) {
-			keys[`${matches[i].toLowerCase().charAt(0)}`] = matches[i];
+			const matchStr = matches[i].split(/{{{|}}}/)[1].trim();
+			keys[`${matchStr.toLowerCase().charAt(0)}`] = matchStr;
 		}
 	}
 	return keys;

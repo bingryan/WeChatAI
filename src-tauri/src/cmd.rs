@@ -1,10 +1,10 @@
-use serde_json::Value;
-use tokio::fs::OpenOptions;
-use tokio::io::AsyncWriteExt;
-
 use crate::app;
 use crate::error::Result;
 use crate::server::helper::chatgpt::ChatGPTModelConfiguration;
+use serde_json::Value;
+
+use tokio::fs::OpenOptions;
+use tokio::io::AsyncWriteExt;
 
 #[tauri::command]
 pub(crate) async fn update_global_chatgpt_config(config: ChatGPTModelConfiguration) -> Result<()> {
