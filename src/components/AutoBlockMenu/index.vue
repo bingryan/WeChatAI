@@ -98,7 +98,6 @@
 	};
 
 	function insertCurrentCursor(input: string) {
-		const editableContent = document.getElementById('editableContent');
 		const selection = window.getSelection();
 
 		if (!selection || selection.rangeCount === 0) return;
@@ -124,7 +123,16 @@
 		range.setEndAfter(textNode);
 		selection.removeAllRanges();
 		selection.addRange(range);
-		editableContent?.focus();
+		// add space after auto complete
+		const space = document.createTextNode(' ');
+		range.insertNode(space);
+		range.setStartAfter(space);
+		range.setEndAfter(space);
+		const newRange = document.createRange();
+		newRange.setStartAfter(space);
+		newRange.setEndAfter(space);
+		selection.removeAllRanges();
+		selection.addRange(newRange);
 	}
 
 	onMounted(() => {
@@ -152,10 +160,6 @@
 								? active.value + 1
 								: 0;
 					}
-					console.log(active.value);
-				} else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-					// Left/right will exit menu
-					if (searchTerm.value.length === 0) open.value = false;
 				} else if (event.key === 'Enter') {
 					insertCurrentCursor(promptOptions.value[active.value].name);
 					handleEnter();
@@ -176,14 +180,6 @@
 					else searchTerm.value = searchTerm.value.slice(0, -1);
 					active.value = 0;
 					setMenuPosition();
-				}
-			});
-
-			editableContent?.addEventListener('keyup', (event: KeyboardEvent) => {
-				if (!open.value) return;
-				if (event.key === 'Enter') {
-					event.preventDefault();
-					event.stopPropagation();
 				}
 			});
 		}

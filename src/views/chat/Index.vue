@@ -163,7 +163,6 @@
 		const hbVars = getHandlebarsVars(template);
 
 		const argsParsed = parseOptArgs(message.split('\n').join(' \n '), hbVars);
-
 		return render(template, argsParsed);
 	}
 

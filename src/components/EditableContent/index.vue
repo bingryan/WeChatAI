@@ -94,19 +94,19 @@
 		exportChatToJson();
 	};
 
-	const getLastChild = () => {
+	const getLastChild = computed(() => {
 		const editableContent = document.getElementById('editableContent');
 		if ((editableContent?.lastChild as any)?.length === 1) {
 			return editableContent?.firstChild;
 		}
 		return editableContent?.lastChild;
-	};
+	});
 
-	const getEndCoordinates = () => {
+	const getEndCoordinates = computed(() => {
 		let x = 0;
 		let y = 0;
 
-		const lastChild = getLastChild();
+		const lastChild = getLastChild.value;
 
 		if (lastChild) {
 			const range = document.createRange();
@@ -117,7 +117,7 @@
 			y = rect.top;
 		}
 		return { x, y };
-	};
+	});
 
 	onMounted(() => {
 		const editableContent = document.getElementById('editableContent');
@@ -165,7 +165,7 @@
 							menu.value.open = true;
 							menu.value.active = 0;
 							menu.value.openedWithSlash = true;
-							const { x, y } = getEndCoordinates();
+							const { x, y } = getEndCoordinates.value;
 							menu.value.changeMenuPosition(x, y);
 						}
 					});
