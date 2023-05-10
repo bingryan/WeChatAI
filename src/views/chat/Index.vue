@@ -130,8 +130,11 @@
 
 	function getPrompt(input: string): string {
 		// re match: -p prompt value  -h hh , match prompt value
-		const regex = /-p\s+([\s\S]*?)(?=\s*-|\s*$)/i;
-		const prompt = input.match(regex)?.[1];
+		// const regex = /-p\s+([\s\S]*?)(?=\s*-|\s*$)/i; not working
+		const prompt = input.split(
+			/-a|-b|-c|-d|-e|-f|-g|-h|-i|-j|-k|-l|-m|-n|-o|-p|-q|-r|-s|-t|-u|-v|-w|-x|-y|-z/,
+			2
+		)[1];
 		const template = promptStore.getTemplateByName(prompt?.trim() ?? '');
 		return template ? template.content : '';
 	}
