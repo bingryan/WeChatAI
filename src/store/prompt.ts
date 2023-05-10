@@ -31,7 +31,15 @@ export const usePromptStore = defineStore(ID, {
 		},
 
 		addTemplate(template: App.PromptTemplate) {
-			this.template.unshift(template);
+			// upset
+			const index = this.template.findIndex(
+				(item) => item.name === template.name
+			);
+			if (index >= 0) {
+				this.template[index] = template;
+			} else {
+				this.template.unshift(template);
+			}
 			setState(this.$state);
 		},
 

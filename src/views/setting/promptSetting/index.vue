@@ -227,10 +227,17 @@
 			fileReader.onload = () => {
 				const { result } = fileReader;
 				if (typeof result === 'string') {
-					const templateList: App.PromptTemplate[] = JSON.parse(result);
+					const templateList = JSON.parse(result);
 					let key = Date.now().toString();
-					templateList.forEach((template) => {
-						const { name, content } = template;
+					templateList.forEach((template: { [key: string]: string }) => {
+						const keys = Object.keys(template).sort(
+							(a, b) => a.length - b.length
+						);
+						if (keys.length !== 2) {
+							return;
+						}
+						const name = template[keys[0]];
+						const content = template[keys[1]];
 						const data = {
 							key,
 							name,
