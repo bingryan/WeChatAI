@@ -27,6 +27,9 @@
 
 https://user-images.githubusercontent.com/41174435/235090423-62082481-1565-4ef6-889e-79f3dceebdba.mp4
 
+https://user-images.githubusercontent.com/41174435/237418023-d62da302-1ffe-4efd-ae25-63f036edc078.mp4
+> `The first letter of the parameter in the prompt template is the command parameter:(`template: {{{format}}}`-> `command: -f`)`
+
 ## Screenshot
 
 ![](docs/image/WeChatAI-1.png)

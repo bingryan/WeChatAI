@@ -72,7 +72,8 @@ jobs:
       - name: bump version
         env:
           VERSION: '${{ steps.get_version.outputs.version-without-v }}'
-        run: pnpm run bump
+        run: |
+          pnpm run bump
 
       # https://tauri.app/v1/guides/distribution/sign-macos
       - name: Build Tauri App

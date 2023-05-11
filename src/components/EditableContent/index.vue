@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	// TODO: add other feat(eg: export data)
 	import { computed, ref, toRefs, watch, onMounted } from 'vue';
 	import { useChatStore } from '@/store';
 	import { Notification } from '@arco-design/web-vue';
 	import { invoke } from '@tauri-apps/api/tauri';
+	import AutoBlockMenu from '@/components/AutoBlockMenu/index.vue';
 
 	interface Props {
 		modelValue: string;
@@ -51,6 +51,7 @@
 
 	// -------------------handle event-----------------------------------------
 	const chatStore = useChatStore();
+	const menu = ref<typeof AutoBlockMenu | null>(null);
 
 	const getCurrentCacheData = computed(() => {
 		const currentActiveId = chatStore.current;
@@ -92,6 +93,31 @@
 		exportChatToJson();
 	};
 
+	const getLastChild = computed(() => {
+		const editableContent = document.getElementById('editableContent');
+		if ((editableContent?.lastChild as any)?.length === 1) {
+			return editableContent?.firstChild;
+		}
+		return editableContent?.lastChild;
+	});
+
+	const getEndCoordinates = computed(() => {
+		let x = 0;
+		let y = 0;
+
+		const lastChild = getLastChild.value;
+
+		if (lastChild) {
+			const range = document.createRange();
+			range.selectNodeContents(lastChild);
+			range.collapse();
+			const rect = range.getBoundingClientRect();
+			x = rect.left;
+			y = rect.top;
+		}
+		return { x, y };
+	});
+
 	onMounted(() => {
 		const editableContent = document.getElementById('editableContent');
 		if (editableContent) {
@@ -131,7 +157,22 @@
 					}
 				}
 			});
+			editableContent.addEventListener('keydown', (event) => {
+				if (event.key === '/') {
+					if (menu.value && !menu.value.open) {
+						menu.value.open = true;
+						menu.value.active = 0;
+						menu.value.openedWithSlash = true;
+						const { x, y } = getEndCoordinates.value;
+						menu.value.changeMenuPosition(x, y);
+					}
+				}
+			});
 		}
+	});
+
+	defineExpose({
+		editableContentRef,
 	});
 </script>
 
@@ -291,6 +332,7 @@
 				</div>
 			</div>
 		</div>
+		<AutoBlockMenu ref="menu" />
 		<div class="px-4 py-2 bg-white dark:bg-[#111111]">
 			<div
 				id="editableContent"
