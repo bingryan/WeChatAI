@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, ref, toRefs, watch, onMounted } from 'vue';
-	import { useChatStore } from '@/store';
+	import { useChatStore, usePromptStore } from '@/store';
 	import { Notification } from '@arco-design/web-vue';
 	import { invoke } from '@tauri-apps/api/tauri';
 	import AutoBlockMenu from '@/components/AutoBlockMenu/index.vue';
@@ -24,6 +24,8 @@
 	const editableContentRef = ref<HTMLElement | null>(null);
 
 	const { modelValue, placeholder } = toRefs(props);
+
+	const promptStore = usePromptStore();
 
 	watch(modelValue, (value) => {
 		if (
@@ -51,7 +53,6 @@
 
 	// -------------------handle event-----------------------------------------
 	const chatStore = useChatStore();
-	const menu = ref<typeof AutoBlockMenu | null>(null);
 
 	const getCurrentCacheData = computed(() => {
 		const currentActiveId = chatStore.current;
@@ -118,6 +119,12 @@
 		return { x, y };
 	});
 
+	const getCursorPosition = () => {
+		const x = 0;
+		const y = 0;
+		const editableContent = document.getElementById('editableContent');
+	};
+
 	onMounted(() => {
 		const editableContent = document.getElementById('editableContent');
 		if (editableContent) {
@@ -154,17 +161,6 @@
 								};
 							}
 						}
-					}
-				}
-			});
-			editableContent.addEventListener('keydown', (event) => {
-				if (event.key === '/') {
-					if (menu.value && !menu.value.open) {
-						menu.value.open = true;
-						menu.value.active = 0;
-						menu.value.openedWithSlash = true;
-						const { x, y } = getEndCoordinates.value;
-						menu.value.changeMenuPosition(x, y);
 					}
 				}
 			});
@@ -332,7 +328,6 @@
 				</div>
 			</div>
 		</div>
-		<AutoBlockMenu ref="menu" />
 		<div class="px-4 py-2 bg-white dark:bg-[#111111]">
 			<div
 				id="editableContent"
@@ -343,6 +338,9 @@
 				:style="style"
 				@input="handleInput">
 			</div>
+			<AutoBlockMenu
+				:menu-list="promptStore.getTemplate"
+				parent-id="editableContent" />
 		</div>
 	</div>
 </template>
