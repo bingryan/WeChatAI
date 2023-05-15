@@ -2,6 +2,7 @@ import path from 'path';
 import { defineConfig, ConfigEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { viteMockServe } from 'vite-plugin-mock';
+import VueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ command }: ConfigEnv) => {
@@ -13,6 +14,7 @@ export default defineConfig(async ({ command }: ConfigEnv) => {
 		},
 		plugins: [
 			vue(),
+			VueDevTools(),
 			viteMockServe({
 				mockPath: 'mock',
 				localEnabled: command === 'serve',
