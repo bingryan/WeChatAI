@@ -25,7 +25,7 @@
 		class="flex w-full mb-6 overflow-hidden"
 		:class="[{ 'flex-row-reverse': isUser }]">
 		<div
-			class="flex items-center justify-center flex-shrink-0 h-8 overflow-hidden rounded-full basis-8"
+			class="flex items-center justify-center flex-shrink-0 h-10 overflow-hidden rounded-full basis-10"
 			:class="[isUser ? 'ml-2' : 'mr-2']">
 			<Avatar :is-user="isUser" />
 		</div>
