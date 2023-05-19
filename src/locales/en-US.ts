@@ -27,6 +27,7 @@ export default {
 		edit: 'Edit',
 		delete: 'Delete',
 		copy: 'Copy',
+		copyQA: 'CopyQA',
 		newChat: 'New Chat',
 		editChat: 'Edit Chat',
 		saveSuccess: 'save success',

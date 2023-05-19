@@ -141,6 +141,25 @@ export const useChatStore = defineStore(ID, {
 			this.chatCache[index].uptime = uptime;
 			this.reloadRoute(id);
 		},
+		/**
+		 * get user's chat context by id and index
+		 * @param id chat id
+		 * @param dataIndex data index
+		 */
+		selectContextQA(id: number, dataIndex: number) {
+			const cacheIndex = this.getCacheIndex(id);
+			const contextData = [];
+			if (cacheIndex !== -1) {
+				const data = this.chatCache[cacheIndex].data[dataIndex];
+				contextData.push(data);
+				if (data.role === 'user') {
+					contextData.push(this.chatCache[cacheIndex].data[dataIndex + 1]);
+				} else {
+					contextData.unshift(this.chatCache[cacheIndex].data[dataIndex - 1]);
+				}
+			}
+			return contextData;
+		},
 
 		/**
 		 * remove single record at cache by id
