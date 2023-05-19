@@ -7,6 +7,8 @@ import ContextMenu from '@imengyu/vue3-context-menu';
 import '@/assets/css/setting-box.less';
 import ArcoVue from '@arco-design/web-vue';
 import type { App } from 'vue';
+// eslint-disable-next-line import/no-unresolved
+import 'virtual:svg-icons-register';
 
 export function setupStyle(app: App) {
 	app

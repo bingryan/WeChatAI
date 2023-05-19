@@ -3,6 +3,7 @@ import { defineConfig, ConfigEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { viteMockServe } from 'vite-plugin-mock';
 import VueDevTools from 'vite-plugin-vue-devtools';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ command }: ConfigEnv) => {
@@ -15,6 +16,9 @@ export default defineConfig(async ({ command }: ConfigEnv) => {
 		plugins: [
 			vue(),
 			VueDevTools(),
+			createSvgIconsPlugin({
+				iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+			}),
 			viteMockServe({
 				mockPath: 'mock',
 				localEnabled: command === 'serve',

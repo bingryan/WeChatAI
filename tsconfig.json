@@ -23,6 +23,7 @@
 		},
 		"types": [
 			"vite/client",
+			"vite-plugin-svg-icons/client",
 			"node"
 		],
 	},
