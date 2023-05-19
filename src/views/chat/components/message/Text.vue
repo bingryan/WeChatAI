@@ -81,6 +81,12 @@
 		chatStore.removeCache(+id, index);
 	}
 
+	function copyQA(index: number) {
+		const contextList = chatStore.selectContextQA(+id, index);
+		const copyContent = `### ${contextList[0].content} \n${contextList[1].content}`;
+		copy(copyContent);
+	}
+
 	const contextMenuTheme = computed(() => {
 		return appStore.theme === 'dark' ? 'mac dark' : 'mac';
 	});
@@ -102,6 +108,13 @@
 						class: 'fa fa-clipboard',
 					}),
 					onClick: () => copy(props.content),
+				},
+				{
+					label: t('common.copyQA'),
+					icon: h('i', {
+						class: 'fa-solid fa-copy',
+					}),
+					onClick: () => copyQA(index),
 				},
 			],
 			zIndex: 60,

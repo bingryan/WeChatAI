@@ -27,6 +27,7 @@ export default {
 		edit: '编辑',
 		delete: '删除',
 		copy: '复制',
+		copyQA: '复制QA',
 		newChat: '新建聊天',
 		editChat: '编辑聊天',
 		saveSuccess: '导出成功',
