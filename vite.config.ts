@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import { viteMockServe } from 'vite-plugin-mock';
 import VueDevTools from 'vite-plugin-vue-devtools';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ command }: ConfigEnv) => {
@@ -23,6 +24,7 @@ export default defineConfig(async ({ command }: ConfigEnv) => {
 				mockPath: 'mock',
 				localEnabled: command === 'serve',
 			}),
+			visualizer(),
 		],
 
 		// Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`

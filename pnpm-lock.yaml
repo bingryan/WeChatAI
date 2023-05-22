@@ -135,6 +135,9 @@ devDependencies:
   prettier:
     specifier: ^2.7.1
     version: registry.npmmirror.com/prettier@2.8.8
+  rollup-plugin-visualizer:
+    specifier: ^5.9.0
+    version: registry.npmmirror.com/rollup-plugin-visualizer@5.9.0
   stylelint:
     specifier: ^14.13.0
     version: registry.npmmirror.com/stylelint@14.16.1
@@ -8794,6 +8797,24 @@ packages:
       glob: registry.npmmirror.com/glob@7.2.3
     dev: true
 
+  registry.npmmirror.com/rollup-plugin-visualizer@5.9.0:
+    resolution: {integrity: sha512-bbDOv47+Bw4C/cgs0czZqfm8L82xOZssk4ayZjG40y9zbXclNk7YikrZTDao6p7+HDiGxrN0b65SgZiVm9k1Cg==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.0.tgz}
+    name: rollup-plugin-visualizer
+    version: 5.9.0
+    engines: {node: '>=14'}
+    hasBin: true
+    peerDependencies:
+      rollup: 2.x || 3.x
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      open: registry.npmmirror.com/open@8.4.2
+      picomatch: registry.npmmirror.com/picomatch@2.3.1
+      source-map: registry.npmmirror.com/source-map@0.7.4
+      yargs: registry.npmmirror.com/yargs@17.7.1
+    dev: true
+
   registry.npmmirror.com/rollup@2.79.1:
     resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/rollup/-/rollup-2.79.1.tgz}
     name: rollup
@@ -9150,6 +9171,13 @@ packages:
     name: source-map
     version: 0.6.1
     engines: {node: '>=0.10.0'}
+
+  registry.npmmirror.com/source-map@0.7.4:
+    resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/source-map/-/source-map-0.7.4.tgz}
+    name: source-map
+    version: 0.7.4
+    engines: {node: '>= 8'}
+    dev: true
 
   registry.npmmirror.com/sourcemap-codec@1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz}
