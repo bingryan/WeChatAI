@@ -29,4 +29,6 @@ dist-ssr
 .history
 .local
 yarn.lock
+# rollup-plugin-visualizer
+stats.html
 
