@@ -83,7 +83,7 @@
 
 	function copyQA(index: number) {
 		const contextList = chatStore.selectContextQA(+id, index);
-		const copyContent = `### ${contextList[0].content} \n${contextList[1].content}`;
+		const copyContent = `### ${contextList[0].content} \n\n${contextList[1].content}`;
 		copy(copyContent);
 	}
 
