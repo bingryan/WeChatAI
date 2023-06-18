@@ -26,6 +26,7 @@ export default {
 	common: {
 		edit: 'Edit',
 		delete: 'Delete',
+		clear: 'Clear',
 		copy: 'Copy',
 		copyQA: 'CopyQA',
 		newChat: 'New Chat',
