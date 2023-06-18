@@ -75,6 +75,10 @@
 		});
 	}
 
+	async function clearSelect(id: number) {
+		await chatStore.clearCache(id);
+	}
+
 	const contextMenuTheme = computed(() => {
 		return appStore.theme === 'dark' ? 'mac dark' : 'mac';
 	});
@@ -97,6 +101,13 @@
 						class: 'fa-solid fa-pen-to-square',
 					}),
 					onClick: () => editSelect(id),
+				},
+				{
+					label: t('common.clear'),
+					icon: h('i', {
+						class: 'fa-solid fa-broom',
+					}),
+					onClick: () => clearSelect(id),
 				},
 			],
 			zIndex: 60,
