@@ -184,6 +184,15 @@ export const useChatStore = defineStore(ID, {
 			this.reloadRoute(id);
 		},
 
+		async copyChatSetting(id: number) {
+			const index = this.getChatSettingIndex(id);
+			const chatSetting = this.chatSetting[index];
+			const newChatSetting = { ...chatSetting, id: new Date().getTime() };
+			this.chatSetting.unshift(newChatSetting);
+			this.current = newChatSetting.id;
+			this.reloadRoute(newChatSetting.id);
+		},
+
 		async reloadRoute(id?: number | null) {
 			setState(this.$state);
 			await router.push({ name: 'chat', params: { id } });

@@ -75,6 +75,10 @@
 		});
 	}
 
+	async function copySelect(id: number) {
+		await chatStore.copyChatSetting(id);
+	}
+
 	async function clearSelect(id: number) {
 		await chatStore.clearCache(id);
 	}
@@ -108,6 +112,13 @@
 						class: 'fa-solid fa-broom',
 					}),
 					onClick: () => clearSelect(id),
+				},
+				{
+					label: t('common.copy'),
+					icon: h('i', {
+						class: 'fa-solid fa-copy',
+					}),
+					onClick: () => copySelect(id),
 				},
 			],
 			zIndex: 60,
