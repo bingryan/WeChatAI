@@ -94,6 +94,28 @@ sudo spctl --master-disable
 
 ## For Developers
 
+### Development
+
+```bash
+# install dependencies
+pnpm install
+
+# web
+pnpm dev
+
+# desktop
+pnpm tauri dev
+```
+
+### Build(Production)
+
+```bash
+pnpm install
+pnpm build
+pnpm tauri build
+```
+
+
 对于任何形式的 PR 都是欢迎的(文档, UI, 代码)
 
 Q: 1. 为什么 server 层还有一个没用上的 chatgpt 的后端服务
