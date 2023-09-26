@@ -84,6 +84,27 @@ The left setting block serves as a global setting:
 
 ## For Developers
 
+### Development
+
+```bash
+# install dependencies
+pnpm install
+
+# web
+pnpm dev
+
+# desktop
+pnpm tauri dev
+```
+
+### Build(Production)
+
+```bash
+pnpm install
+pnpm build
+pnpm tauri build
+```
+
 Any form of PR is welcome (documentation, UI, code)
 
 ## Technology Stack and Credits
