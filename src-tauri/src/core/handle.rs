@@ -85,8 +85,9 @@ impl Handle {
         let url = window_info.url.as_str();
 
         if let Some(window) = app_handle.get_window(label) {
-			let _ = window.set_always_on_top(true);
+            // let _ = window.set_always_on_top(true);
             let _ = window.show();
+            let _ = window.set_focus();
             return;
         }
 
