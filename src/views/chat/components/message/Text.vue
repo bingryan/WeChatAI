@@ -131,7 +131,10 @@
 		:style="bdStyle"
 		@contextmenu.prevent="onContextMenu($event, props.index)">
 		<div ref="textRef" class="leading-relaxed break-words">
-			<div v-if="isRenderMarkdown" class="markdown-body" v-html="text" />
+			<div
+				v-if="isRenderMarkdown"
+				class="markdown-body max-w-full"
+				v-html="text" />
 			<div v-else class="whitespace-pre-wrap" v-text="text" />
 		</div>
 	</div>
